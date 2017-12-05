@@ -5,20 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Orchard on Firebase Hosting</title>
 
-    <!-- CSS -->
+    <!-- # CSS -->
+    <!-- Normalize CSS -->
     <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/7.0.0/normalize.css" media="screen" />
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen" />
 
-
-    <!-- update the version number as needed -->
+    <!-- # JavaScript -->
+    <!-- Vue https://vuejs.org/ -->
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Firebase -->
     <script defer src="/__/firebase/4.7.0/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/4.7.0/firebase-auth.js"></script>
     <script defer src="/__/firebase/4.7.0/firebase-database.js"></script>
     <script defer src="/__/firebase/4.7.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/4.7.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
+    <!-- <script defer src="/__/firebase/4.7.0/firebase-storage.js"></script> -->
+    <!-- initialize the Firebase SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
+    <!-- VueFire https://github.com/vuejs/vuefire -->
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
   </head>
   <body>
     <header role="banner">
@@ -30,7 +36,9 @@
         <!-- end logo -->
       </a>
       <nav>
-        <button id="login-google">Login</button>
+        <ul id="login">
+          <button id="login-google">Login</button>
+        </ul>
       </nav>
     </header>
     <main id="app" role="main">
@@ -74,9 +82,6 @@
     </div>
     <p id="load">Firebase SDK Loading&hellip;</p>
     -->
-
-    <!-- Vue.js -->
-    <script src="https://unpkg.com/vue"></script>
 
     <!-- Firebase -->
     <script>
