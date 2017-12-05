@@ -1,8 +1,8 @@
-class AppVM {
+class BannerVM {
   constructor() {
     this.vm = new Vue({
       // element to mount to
-      el: '#app',
+      el: '#banner',
       // initial data
       data: {
 

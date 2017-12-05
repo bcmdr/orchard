@@ -27,7 +27,7 @@
     <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
   </head>
   <body>
-    <header role="banner">
+    <header id="banner" role="banner">
       <a href="/" rel="home">
         <div class="logo">
           <h1>Orchard</h1>
@@ -85,7 +85,7 @@
     -->
 
     <!-- Custom Scripts -->
-    <script src="./scripts/app.js"></script>
+    <script src="./scripts/BannerVM.js"></script>
 
     <!-- Firebase Demo -->
     <script>
@@ -101,10 +101,11 @@
         //   firebase.auth().signInWithRedirect(provider);
         // }
 
-        var app = new AppVM();
+        var banner = new BannerVM();
 
         firebase.auth().onAuthStateChanged(user => {
-          console.log(user)
+          if (user)
+            console.log(user)
         });
 
         // firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
