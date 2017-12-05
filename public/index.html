@@ -100,13 +100,10 @@
         //   var provider = new firebase.auth.GoogleAuthProvider();
         //   firebase.auth().signInWithRedirect(provider);
         // }
-
-        var banner = new BannerVM();
-
-        firebase.auth().onAuthStateChanged(user => {
-          if (user)
-            console.log(user)
-        });
+        let vueModels = {
+          banner: new BannerVM(),
+          // app: new AppVM()
+        }
 
         // firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
         // firebase.messaging().requestPermission().then(() => { });

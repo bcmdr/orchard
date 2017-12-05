@@ -5,27 +5,12 @@ class BannerVM {
       el: '#banner',
       // initial data
       data: {
-
+        isSignedIn: false
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
       firebase: {
         users: firebase.database().ref('users')
-      },
-      // computed property for form validation state
-      computed: {
-        // validation: function () {
-        //   return {
-        //     name: !!this.newUser.name.trim(),
-        //     email: emailRE.test(this.newUser.email)
-        //   }
-        // },
-        // isValid: function () {
-        //   var validation = this.validation
-        //   return Object.keys(validation).every(function (key) {
-        //     return validation[key]
-        //   })
-        // }
       },
       // methods
       methods: {
@@ -46,18 +31,18 @@ class BannerVM {
             console.log(error)
           });
         }
-
-        // addUser: function () {
-        //   if (this.isValid) {
-        //     usersRef.push(this.newUser)
-        //     this.newUser.name = ''
-        //     this.newUser.email = ''
-        //   }
-        // },
-        // removeUser: function (user) {
-        //   usersRef.child(user['.key']).remove()
-        // }
+      },
+      // 'created' lifecycle hook
+      created: function () {
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) console.log(user)
+          this.isSignedIn = (user) ? true : false
+        });
       }
+
+    // end new
     })
+  // end constructor
   }
+// end class
 }
