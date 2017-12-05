@@ -6,7 +6,9 @@
     <title>Orchard on Firebase Hosting</title>
 
     <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/7.0.0/normalize.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen" />
+
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/4.7.0/firebase-app.js"></script>
@@ -19,20 +21,19 @@
     <script defer src="/__/firebase/init.js"></script>
   </head>
   <body>
-    <main id="app">
-      <header>
-        <h1>Orchard - Grow Forth</h1>
-        <p>
-          Welcome to Orchard. This is your tree.<br>
-          Your tree wants to help you build a better habit.<br>
-          Start by telling your tree something you'd like to do every day.<br>
-          Your tree grows a fruit each day you do that particular thing.<br>
-          Be sure to check back on successful days to collect your fruit.<br>
-          If you miss a day, don't worry. Just try again the next day.<br>
-          The more fruit you collect, the better you'll feel.<br>
-          Your tree is waiting. Help it help you. Best of luck!
-        </p>
-      </header>
+    <header role="banner">
+      <a href="/" rel="home">
+        <div class="logo">
+          <h1>Orchard</h1>
+          <h2>Healthy Habits, One Day at a Time</h2>
+        </div>
+        <!-- end logo -->
+      </a>
+      <nav>
+        <button id="login-google">Login</button>
+      </nav>
+    </header>
+    <main id="app" role="main">
       <section class="user-trees">
         <article id="user-tree-1">
           <header>
@@ -40,16 +41,29 @@
             <p>I'd like to stop spending so much money on food, especially fast food.</p>
           </header>
           <section class="tree-timer">
-            <p>Next fruit in: 24 hours</p>
+            <p>Next fruit in: 22 hours</p>
           </section>
         </article>
       </section>
-
-      <footer style="position: abolus">
-      <hr>
-      <p>Orchard | © 2017 Brett Commandeur | <a href="https://shallwi.co">Made Awesome by Shallwi</a><p>
-      </footer>
+      <section class="about">
+        <h2>About Orchard</h2>
+        <p>
+          Orchard is home to your tree.<br>
+          Your tree wants to help you build better habits.<br>
+          Start by telling your tree something you'd like to do every day.<br>
+          Your tree grows a fruit each day you do that particular thing.<br>
+          Be sure to check back on successful days to collect your fruit.<br>
+          If you miss a day, don't worry. Just try again the next day.<br>
+          The more fruit you collect, the better you'll feel.<br>
+          Your tree is waiting. Help it help you. <br>
+          Best of luck!
+        </p>
+      </section>
     </main>
+
+    <footer style="position: abolus">
+    <p>Orchard | © 2017 Brett Commandeur | <a href="https://shallwi.co">Made Awesome by Shallwi</a><p>
+    </footer>
 
     <!--
     <div id="message">
@@ -66,25 +80,37 @@
 
     <!-- Firebase -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      document.addEventListener('DOMContentLoaded', function() {
+        // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // The Firebase SDK is initialized and available here!
+
+        // Setup Authentication
+        document.getElementById('login-google').onclick = () => {
+          // https://firebase.google.com/docs/auth/web/google-signin
+          var provider = new firebase.auth.GoogleAuthProvider();
+          firebase.auth().signInWithRedirect(provider);
         }
+
+        firebase.auth().onAuthStateChanged(user => {
+          console.log(user)
+        });
+
+        // # Firebase Demo
+          // firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
+          // firebase.messaging().requestPermission().then(() => { });
+          // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+          //
+          // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+          // try {
+          //   let app = firebase.app();
+          //   let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          //   document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+          // } catch (e) {
+          //   console.error(e);
+          //   document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+          // }
       });
     </script>
   </body>
