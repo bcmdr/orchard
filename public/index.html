@@ -37,7 +37,8 @@
       </a>
       <nav>
         <div id="login">
-          <button id="login-google">Login</button>
+          <button id="signin-google" @click="signinGoogle">Sign In with Google</button>
+          <button id="signout-google" @click="signoutGoogle">Logout</button>
         </div>
       </nav>
     </header>
@@ -83,39 +84,43 @@
     <p id="load">Firebase SDK Loading&hellip;</p>
     -->
 
-    <!-- Firebase -->
+    <!-- Custom Scripts -->
+    <script src="./scripts/app.js"></script>
+
+    <!-- Firebase Demo -->
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
         // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
         // The Firebase SDK is initialized and available here!
 
-        // Setup Authentication
-        document.getElementById('login-google').onclick = () => {
-          // https://firebase.google.com/docs/auth/web/google-signin
-          var provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithRedirect(provider);
-        }
+        // // Setup Authentication
+        // document.getElementById('login-google').onclick = () => {
+        //   // https://firebase.google.com/docs/auth/web/google-signin
+        //   var provider = new firebase.auth.GoogleAuthProvider();
+        //   firebase.auth().signInWithRedirect(provider);
+        // }
+
+        var app = new AppVM();
 
         firebase.auth().onAuthStateChanged(user => {
           console.log(user)
         });
 
-        // # Firebase Demo
-          // firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
-          // firebase.messaging().requestPermission().then(() => { });
-          // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-          //
-          // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-          // try {
-          //   let app = firebase.app();
-          //   let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          //   document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-          // } catch (e) {
-          //   console.error(e);
-          //   document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-          // }
+        // try {
+        //   let app = firebase.app();
+        //   let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        //   document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        // } catch (e) {
+        //   console.error(e);
+        //   document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        // }
       });
     </script>
   </body>
