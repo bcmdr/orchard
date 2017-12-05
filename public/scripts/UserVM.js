@@ -1,11 +1,12 @@
-class BannerVM {
+class UserVM {
   constructor() {
     this.vm = new Vue({
       // element to mount to
-      el: '#banner',
+      el: '#user',
       // initial data
       data: {
-        isSignedIn: false
+        isSignedIn: false,
+        signInStatusKnown: false,
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
@@ -37,6 +38,7 @@ class BannerVM {
         firebase.auth().onAuthStateChanged(user => {
           if (user) console.log(user)
           this.isSignedIn = (user) ? true : false
+          this.signInStatusKnown = true
         });
       }
 

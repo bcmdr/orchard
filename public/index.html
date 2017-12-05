@@ -36,9 +36,13 @@
         <!-- end logo -->
       </a>
       <nav>
-        <div id="login">
-          <button id="signin-google" @click="signinGoogle">Sign In with Google</button>
-          <button id="signout-google" @click="signoutGoogle">Logout</button>
+        <div id="user">
+          <div v-if="signInStatusKnown" id="login">
+            <button v-if="isSignedIn" id="signout-google" @click="signoutGoogle">Logout</button>
+            <div v-else>
+              <button id="signin-google" @click="signinGoogle">Sign In with Google</button>
+            </div>
+          </div>
         </div>
       </nav>
     </header>
@@ -85,7 +89,7 @@
     -->
 
     <!-- Custom Scripts -->
-    <script src="./scripts/BannerVM.js"></script>
+    <script src="./scripts/UserVM.js"></script>
 
     <!-- Firebase Demo -->
     <script>
@@ -101,7 +105,7 @@
         //   firebase.auth().signInWithRedirect(provider);
         // }
         let vueModels = {
-          banner: new BannerVM(),
+          banner: new UserVM(),
           // app: new AppVM()
         }
 
