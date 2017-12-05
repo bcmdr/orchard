@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Orchard on Firebase Hosting</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen" />
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/4.7.0/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/4.7.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/4.7.0/firebase-database.js"></script>
+    <script defer src="/__/firebase/4.7.0/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/4.7.0/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+  </head>
+  <body>
+    <main id="app">
+      <header>
+        <h1>Orchard - Grow Forth</h1>
+        <p>
+          Welcome to Orchard. This is your tree.<br>
+          Your tree wants to help you build a better habit.<br>
+          Start by telling your tree something you'd like to do every day.<br>
+          Your tree grows a fruit each day you do that particular thing.<br>
+          Be sure to check back on successful days to collect your fruit.<br>
+          If you miss a day, don't worry. Just try again the next day.<br>
+          The more fruit you collect, the better you'll feel.<br>
+          Your tree is waiting. Help it help you. Best of luck!
+        </p>
+      </header>
+      <section class="user-trees">
+        <article id="user-tree-1">
+          <header>
+            <h2>Prepare Every Meal</h2>
+            <p>I'd like to stop spending so much money on food, especially fast food.</p>
+          </header>
+          <section class="tree-timer">
+            <p>Next fruit in: 24 hours</p>
+          </section>
+        </article>
+      </section>
+
+      <footer style="position: abolus">
+      <hr>
+      <p>Orchard | © 2017 Brett Commandeur | <a href="https://shallwi.co">Made Awesome by Shallwi</a><p>
+      </footer>
+    </main>
+
+    <!--
+    <div id="message">
+      <h2>Welcome</h2>
+      <h1>Firebase Hosting Setup Complete</h1>
+      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
+      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    </div>
+    <p id="load">Firebase SDK Loading&hellip;</p>
+    -->
+
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue"></script>
+
+    <!-- Firebase -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+  </body>
+</html>
