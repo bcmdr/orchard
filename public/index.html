@@ -63,7 +63,7 @@
       </div>
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div v-if="isSignedIn" id="user-trees">
+          <!-- <div v-if="isSignedIn" id="user-trees">
             <div id="tree-uid-1" class="tree-card-wide mdl-card mdl-shadow--2dp">
               <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Work On Orchard</h2>
@@ -83,12 +83,27 @@
                 </button>
               </div>
             </div>
+          </div> -->
+
+          <div id="user-trees">
+            <input
+              v-model="newTreeText"
+              v-on:keyup.enter="addNewTodo"
+              placeholder="Plant a Tree"
+            >
+            <user-tree
+              v-for="(tree, index) in trees"
+              v-bind:key="tree.id"
+              v-bind:title="tree.title"
+              v-on:remove="trees.splice(index, 1)"
+            ></user-tree>
+
           </div>
         </section>
       </main>
     </div> <!-- end #main -->
 
-    <!-- Include Vue Models -->
+    <!-- Include Vue Model -->
     <script src="./scripts/AppVM.js"></script>
 
     <!-- Content Loaded and Ready -->
@@ -96,9 +111,7 @@
       document.addEventListener('DOMContentLoaded', function() {
 
         // Prepare and Mount Vue Models
-        let vueModels = {
-          app: new AppVM(),
-        }
+        let vueModel = new AppVM()
 
       });
     </script>
