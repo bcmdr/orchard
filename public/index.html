@@ -46,7 +46,7 @@
           <nav class="mdl-navigation">
             <div id="user">
               <div v-if="signInStatusKnown">
-                <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
+                <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle"><i class="material-icons">account_circle</i></a>
                 <div v-else>
                   <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
                 </div>
