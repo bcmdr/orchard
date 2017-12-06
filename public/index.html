@@ -44,7 +44,7 @@
           <nav class="mdl-navigation">
             <div id="user">
               <div v-if="signInStatusKnown">
-                <a v-if="isSignedIn" class="mdl-navigation__link"><i class="material-icons">account_circle</i></a>
+                <a v-if="isSignedIn" class="mdl-navigation__link"><i class="material-icons">add_circle</i></a>
                 <div v-else>
                   <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
                 </div>
@@ -63,23 +63,26 @@
       </div>
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col">
-
-              <div id="user-trees">
-                <input
-                  v-model="newTreeText"
-                  v-on:keyup.enter="addNewTree"
-                  placeholder="Plant a Tree"
-                >
-                <user-tree
-                  v-for="(tree, index) in trees"
-                  v-bind:key="tree.id"
-                  v-bind:title="tree.title"
-                  v-bind:description="tree.description"
-                  v-on:remove="trees.splice(index, 1)"
-                ></user-tree>
-
+          <div id="user-trees">
+            <div class="new-tree">
+              <input
+                v-model="newTreeTitleText"
+                placeholder="Title"
+              >
+              <input
+                v-model="newTreeDescriptionText"
+                v-on:keyup.enter="addNewTree"
+                placeholder="Description"
+              >
+            </div>
+            <div class="mdl-grid">
+              <user-tree
+                v-for="(tree, index) in trees"
+                v-bind:key="tree.id"
+                v-bind:title="tree.title"
+                v-bind:description="tree.description"
+                v-on:remove="trees.splice(index, 1)"
+              ></user-tree>
               </div>
             </div>
           </div>

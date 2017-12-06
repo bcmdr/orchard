@@ -2,24 +2,25 @@ class AppVM {
   constructor() {
     Vue.component('user-tree', {
       template: `
-        <div class="user-tree tree-card-wide mdl-card mdl-shadow--2dp">
-          <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">{{title}}</h2>
+        <div class="mdl-cell mdl-cell--4-col">
+          <div class="user-tree tree-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">{{title}}</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <p>{{description}}</p>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Water
+              </a>
+            </div>
+            <div class="mdl-card__menu">
+              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
+                <i class="material-icons">remove_circle_outline</i>
+              </button>
+            </div>
           </div>
-          <div class="mdl-card__supporting-text">
-            <p>{{description}}</p>
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Water
-            </a>
-          </div>
-          <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
-              <i class="material-icons">remove_circle_outline</i>
-            </button>
-          </div>
-        </div>
       `,
       props: [
         'id', 'title', 'description'

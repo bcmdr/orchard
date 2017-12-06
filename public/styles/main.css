@@ -16,9 +16,8 @@ a:hover {
 /* Tree Card Styles */
 
 .tree-card-wide.mdl-card {
+  width: 100%;
   margin: auto;
-  width: 90%;
-  margin-top: 20px;
   min-height: 1px; /* Override 200px default, scale with content */
 }
 .tree-card-wide > .mdl-card__title {
