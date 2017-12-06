@@ -89,7 +89,7 @@ class AppVM {
       },
       computed: {
         today: function() {
-          var options = { weekday: 'long', month: 'long', day: 'numeric' }
+          var options = { weekday: 'short', month: 'short', day: 'numeric' }
           return this.date.toLocaleDateString('en-us', options)
         }
       },
