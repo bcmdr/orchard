@@ -1,3 +1,21 @@
-main, footer {
-  text-align: center;
+/* General Styles */
+a:hover {
+  cursor: pointer;
+}
+
+
+/* Tree Card Styles */
+
+.tree-card-wide.mdl-card {
+  margin: auto;
+  width: 90%;
+  margin-top: 20px;
+  min-height: 1px; /* Override 200px default, scale with content */
+}
+.tree-card-wide > .mdl-card__title {
+  color: #fff;
+  background: #34623F
+}
+.tree-card-wide > .mdl-card__menu {
+  color: #fff;
 }

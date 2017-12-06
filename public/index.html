@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Water Your Tree — Orchard</title>
+    <title>Orchard</title>
 
     <!-- # CSS -->
     <!-- Normalize CSS -->
@@ -34,38 +34,25 @@
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
   <body>
-    <!-- <header id="banner" role="banner">
-      <a href="/" rel="home">
-        <div class="logo">
-          <h1>Orchard</h1>
-          <h2>Healthy Habits, One Day at a Time</h2>
-        </div>
-      </a>
-      <nav>
-        <div id="user">
-          <div v-if="signInStatusKnown" id="login">
-            <button v-if="isSignedIn" id="signout-google" @click="signoutGoogle">Logout</button>
-            <div v-else>
-              <button id="signin-google" @click="signinGoogle">Sign In with Google</button>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header> -->
-
     <!-- MDL Fixed Header -->
     <!-- Always shows a header, even in smaller screens. -->
     <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header" role="banner">
         <div class="mdl-layout__header-row">
-          <!-- Align with spacer -->
-          <div class="mdl-layout-spacer"></div>
           <!-- Title -->
-          <span class="mdl-layout-title">{{tree.title}}</span>
+          <span class="mdl-layout-title">{{today}}</span>
           <!-- Align with spacer -->
           <div class="mdl-layout-spacer"></div>
-          <!-- Info Icon -->
-          <i class="material-icons">info_outline</i>
+          <nav class="mdl-navigation">
+            <div id="user">
+              <div v-if="signInStatusKnown">
+                <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
+                <div v-else>
+                  <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
+                </div>
+              </div>
+            </div>
+          </nav>
         </div>
       </header>
       <div class="mdl-layout__drawer">
@@ -75,22 +62,35 @@
             <div v-if="signInStatusKnown">
               <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
               <div v-else>
-                <a class="mdl-navigation__link" @click="signinGoogle">Sign In with Google</a>
+                <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
               </div>
             </div>
           </div>
         </nav>
       </div>
       <main class="mdl-layout__content">
-        <div class="page-content">
-            <h2>{{today}}</h2>
-            <button>Done</button>
-          </section>
-        </div>
+        <section class="page-content">
+          <div class="tree-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Work On Orchard</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              Write code every day and submit at least 3 git pushes
+              to the Orchard repository.
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Done
+              </a>
+            </div>
+            <div class="mdl-card__menu">
+              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">info</i>
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer>
-      <p>Orchard | © 2017 Brett Commandeur | <a href="https://shallwi.co">Made Awesome by Shallwi</a><p>
-      </footer>
     </div>
 
     <!-- Include Vue Models -->
