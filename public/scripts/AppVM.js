@@ -12,7 +12,7 @@ class AppVM {
             </div>
             <div class="mdl-card__actions mdl-card--border">
               <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Water
+                Done
               </a>
             </div>
             <div class="mdl-card__menu">
@@ -52,6 +52,21 @@ class AppVM {
       firebase: {
         users: firebase.database().ref('users')
       },
+      computed: {
+        today: function() {
+          var options = { weekday: 'short', month: 'short', day: 'numeric' }
+          return this.date.toLocaleDateString('en-us', options)
+        }
+      },
+      // 'created' lifecycle hook
+      created: function () {
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) console.log(user)
+          this.isSignedIn = (user) ? true : false
+          this.signInStatusKnown = true
+        });
+      },
+
       // methods
       methods: {
         signinGoogle: function () {
@@ -72,6 +87,8 @@ class AppVM {
         },
 
         addNewTree: function () {
+          if (!this.newTreeTitle || !this.newTreeDescription)
+            return
           this.trees.push({
             id: this.nextTreeId++,
             title: this.newTreeTitle,
@@ -82,20 +99,7 @@ class AppVM {
         }
 
       },
-      computed: {
-        today: function() {
-          var options = { weekday: 'short', month: 'short', day: 'numeric' }
-          return this.date.toLocaleDateString('en-us', options)
-        }
-      },
-      // 'created' lifecycle hook
-      created: function () {
-        firebase.auth().onAuthStateChanged(user => {
-          if (user) console.log(user)
-          this.isSignedIn = (user) ? true : false
-          this.signInStatusKnown = true
-        });
-      }
+
 
     // end new
     })

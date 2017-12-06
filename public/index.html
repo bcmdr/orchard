@@ -64,20 +64,6 @@
       <main class="mdl-layout__content">
         <section class="page-content">
           <div id="user-trees">
-            <div class="new-tree mdl-grid">
-              <div class="mdl-cell mdl-cell--6-col">
-                Plant a Tree:
-                <input
-                  v-model="newTreeTitle"
-                  placeholder="Title"
-                >
-                <input
-                  v-model="newTreeDescription"
-                  v-on:keyup.enter="addNewTree"
-                  placeholder="Description"
-                >
-              </div>
-            </div>
             <div class="mdl-grid">
               <user-tree
                 v-for="(tree, index) in trees"
@@ -86,6 +72,21 @@
                 v-bind:description="tree.description"
                 v-on:remove="trees.splice(index, 1)"
               ></user-tree>
+              <div class="new-tree mdl-cell mdl-cell--4-col">
+                <p>Plant a Tree</p>
+                <p>
+                  <input
+                    v-model="newTreeTitle"
+                    placeholder="Title"
+                  >
+                </p>
+                <p>
+                  <textarea
+                    v-model="newTreeDescription"
+                    v-on:keyup.enter="addNewTree"
+                    placeholder="Description"
+                  ></textarea>
+                </p>
               </div>
             </div>
           </div>
