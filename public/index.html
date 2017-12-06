@@ -46,7 +46,7 @@
           <nav class="mdl-navigation">
             <div id="user">
               <div v-if="signInStatusKnown">
-                <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle"><i class="material-icons">account_circle</i></a>
+                <a v-if="isSignedIn" class="mdl-navigation__link"><i class="material-icons">account_circle</i></a>
                 <div v-else>
                   <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
                 </div>
@@ -58,35 +58,32 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Orchard</span>
         <nav class="mdl-navigation">
-          <div id="user">
-            <div v-if="signInStatusKnown">
-              <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
-              <div v-else>
-                <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
-              </div>
-            </div>
+          <div v-if="signInStatusKnown">
+            <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
           </div>
         </nav>
       </div>
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div class="tree-card-wide mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-              <h2 class="mdl-card__title-text">Work On Orchard</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-              Write code every day and submit at least 3 git pushes
-              to the Orchard repository.
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Done
-              </a>
-            </div>
-            <div class="mdl-card__menu">
-              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                <i class="material-icons">info</i>
-              </button>
+          <div v-if="isSignedIn" class="user-trees">
+            <div class="tree-card-wide mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Work On Orchard</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                Write code every day and submit at least 3 git pushes
+                to the Orchard repository.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Done
+                </a>
+              </div>
+              <div class="mdl-card__menu">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                  <i class="material-icons">info</i>
+                </button>
+              </div>
             </div>
           </div>
         </section>

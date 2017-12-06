@@ -10,7 +10,7 @@ class AppVM {
         signInStatusKnown: false,
         date: date,
         tree: {
-          title: "Work On Orchard"
+          title: "Work On Orhcard"
         },
       },
       // firebase binding
