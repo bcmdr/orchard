@@ -1,12 +1,17 @@
-class UserVM {
+class AppVM {
   constructor() {
+    let date = new Date()
     this.vm = new Vue({
       // element to mount to
-      el: '#user',
+      el: '#app',
       // initial data
       data: {
         isSignedIn: false,
         signInStatusKnown: false,
+        date: date,
+        tree: {
+          title: "Write Code"
+        },
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
@@ -31,6 +36,12 @@ class UserVM {
             // An error happened.
             console.log(error)
           });
+        }
+      },
+      computed: {
+        today: function() {
+          var options = { weekday: 'long', month: 'long', day: 'numeric' }
+          return this.date.toLocaleDateString('en-us', options)
         }
       },
       // 'created' lifecycle hook

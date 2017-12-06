@@ -1,11 +1,15 @@
-class UserVM {
+class OLDAppVM {
   constructor() {
+    let date = new Date()
     this.vm = new Vue({
       // element to mount to
-      el: '#main',
+      el: '#app',
       // initial data
       data: {
-        date: new Date();
+        date: date,
+        tree: {
+          title: "Write Code"
+        },
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
@@ -15,9 +19,10 @@ class UserVM {
 
       computed: {
         today: function() {
-          return this.date
+          var options = { weekday: 'long', month: 'long', day: 'numeric' }
+          return this.date.toLocaleDateString('en-us', options)
         }
-      }
+      },
 
       // methods
       methods: {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Orchard on Firebase Hosting</title>
+    <title>Water Your Tree — Orchard</title>
 
     <!-- # CSS -->
     <!-- Normalize CSS -->
@@ -55,13 +55,13 @@
 
     <!-- MDL Fixed Header -->
     <!-- Always shows a header, even in smaller screens. -->
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header" role="banner">
         <div class="mdl-layout__header-row">
           <!-- Align with spacer -->
           <div class="mdl-layout-spacer"></div>
           <!-- Title -->
-          <span class="mdl-layout-title">Water Your Tree</span>
+          <span class="mdl-layout-title">{{tree.title}}</span>
           <!-- Align with spacer -->
           <div class="mdl-layout-spacer"></div>
           <!-- Info Icon -->
@@ -81,16 +81,10 @@
           </div>
         </nav>
       </div>
-      <main id="main" class="mdl-layout__content">
-        <div id="tree-display" class="page-content">
-            <div class="tree" id="tree-uid">
-              <header>
-                <h2>{{ today }}</h2>
-              </header>
-              <section class="tree-timer">
-                <p>Until Next Fruit</p>
-              </section>
-            </article>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+            <h2>{{today}}</h2>
+            <button>Done</button>
           </section>
         </div>
       </main>
@@ -100,8 +94,7 @@
     </div>
 
     <!-- Include Vue Models -->
-    <script src="./scripts/UserVM.js"></script>
-    <script src="./scripts/MainVM.js"></script>
+    <script src="./scripts/AppVM.js"></script>
 
     <!-- Content Loaded and Ready -->
     <script>
@@ -109,8 +102,7 @@
 
         // Prepare and Mount Vue Models
         let vueModels = {
-          banner: new UserVM(),
-          main: new MainVM(),
+          app: new AppVM(),
         }
 
       });
