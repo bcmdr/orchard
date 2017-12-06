@@ -3,6 +3,14 @@ a:hover {
   cursor: pointer;
 }
 
+.mdl-layout__header-row {
+  padding: 0 0 0 80px !important;
+}
+
+[v-cloak] {
+  display: none;
+}
+
 
 /* Tree Card Styles */
 

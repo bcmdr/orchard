@@ -36,7 +36,7 @@
   <body>
     <!-- MDL Fixed Header -->
     <!-- Always shows a header, even in smaller screens. -->
-    <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div v-cloak id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header" role="banner">
         <div class="mdl-layout__header-row">
           <!-- Title -->
@@ -91,7 +91,7 @@
           </div>
         </section>
       </main>
-    </div>
+    </div> <!-- end #main -->
 
     <!-- Include Vue Models -->
     <script src="./scripts/AppVM.js"></script>
