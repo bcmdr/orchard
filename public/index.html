@@ -64,16 +64,19 @@
       <main class="mdl-layout__content">
         <section class="page-content">
           <div id="user-trees">
-            <div class="new-tree">
-              <input
-                v-model="newTreeTitleText"
-                placeholder="Title"
-              >
-              <input
-                v-model="newTreeDescriptionText"
-                v-on:keyup.enter="addNewTree"
-                placeholder="Description"
-              >
+            <div class="new-tree mdl-grid">
+              <div class="mdl-cell mdl-cell--6-col">
+                Plant a Tree:
+                <input
+                  v-model="newTreeTitle"
+                  placeholder="Title"
+                >
+                <input
+                  v-model="newTreeDescription"
+                  v-on:keyup.enter="addNewTree"
+                  placeholder="Description"
+                >
+              </div>
             </div>
             <div class="mdl-grid">
               <user-tree

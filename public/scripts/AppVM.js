@@ -21,6 +21,7 @@ class AppVM {
               </button>
             </div>
           </div>
+        </div>
       `,
       props: [
         'id', 'title', 'description'
@@ -35,25 +36,16 @@ class AppVM {
         isSignedIn: false,
         signInStatusKnown: false,
         date: new Date(),
-        newTreeText: '',
+        newTreeTitle: '',
+        newTreeDescription: '',
         trees: [
           {
             id: 1,
             title: 'Work On Orchard',
             description: '3 Git Pushes per Day'
-          },
-          {
-            id: 2,
-            title: 'Stay In Shape',
-            description: '10 Push Ups per Day'
-          },
-          {
-            id: 3,
-            title: 'Stay Hydrated',
-            description: '3 Waterbottle refills per day'
           }
         ],
-        nextTodoId: 4,
+        nextTodoId: 2,
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
@@ -82,9 +74,11 @@ class AppVM {
         addNewTree: function () {
           this.trees.push({
             id: this.nextTreeId++,
-            title: this.newTreeText
+            title: this.newTreeTitle,
+            description: this.newTreeDescription
           })
-          this.newTreeText = ''
+          this.newTreeTitle = ''
+          this.newTreeDescription = ''
         }
 
       },
