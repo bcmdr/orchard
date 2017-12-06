@@ -14,8 +14,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen" />
 
-
-
     <!-- # JavaScript -->
     <!-- Firebase -->
     <script defer src="/__/firebase/4.7.0/firebase-app.js"></script>
@@ -65,8 +63,8 @@
       </div>
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div v-if="isSignedIn" class="user-trees">
-            <div class="tree-card-wide mdl-card mdl-shadow--2dp">
+          <div v-if="isSignedIn" id="user-trees">
+            <div id="tree-uid-1" class="tree-card-wide mdl-card mdl-shadow--2dp">
               <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Work On Orchard</h2>
               </div>
