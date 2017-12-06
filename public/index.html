@@ -34,13 +34,12 @@
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
   <body>
-    <header id="banner" role="banner">
+    <!-- <header id="banner" role="banner">
       <a href="/" rel="home">
         <div class="logo">
           <h1>Orchard</h1>
           <h2>Healthy Habits, One Day at a Time</h2>
         </div>
-        <!-- end logo -->
       </a>
       <nav>
         <div id="user">
@@ -52,84 +51,68 @@
           </div>
         </div>
       </nav>
-    </header>
-    <main id="app" role="main">
-      <section class="user-trees">
-        <article id="user-tree-1">
-          <header>
-            <h2>Prepare Every Meal</h2>
-            <p>I'd like to stop spending so much money on food, especially fast food.</p>
-          </header>
-          <section class="tree-timer">
-            <p>Next fruit in: 22 hours</p>
+    </header> -->
+
+    <!-- MDL Fixed Header -->
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header" role="banner">
+        <div class="mdl-layout__header-row">
+          <!-- Align with spacer -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Title -->
+          <span class="mdl-layout-title">Water Your Tree</span>
+          <!-- Align with spacer -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Info Icon -->
+          <i class="material-icons">info_outline</i>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Orchard</span>
+        <nav class="mdl-navigation">
+          <div id="user">
+            <div v-if="signInStatusKnown">
+              <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
+              <div v-else>
+                <a class="mdl-navigation__link" @click="signinGoogle">Sign In with Google</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <main id="main" class="mdl-layout__content">
+        <div id="tree-display" class="page-content">
+            <div class="tree" id="tree-uid">
+              <header>
+                <h2>{{ today }}</h2>
+              </header>
+              <section class="tree-timer">
+                <p>Until Next Fruit</p>
+              </section>
+            </article>
           </section>
-        </article>
-      </section>
-      <section class="about">
-        <h2>About Orchard</h2>
-        <p>
-          Orchard is home to your tree.<br>
-          Your tree wants to help you build better habits.<br>
-          Start by telling your tree something you'd like to do every day.<br>
-          Your tree grows a fruit each day you do that particular thing.<br>
-          Be sure to check back on successful days to collect your fruit.<br>
-          If you miss a day, don't worry. Just try again the next day.<br>
-          The more fruit you collect, the better you'll feel.<br>
-          Your tree is waiting. Help it help you. <br>
-          Best of luck!
-        </p>
-      </section>
-    </main>
-
-    <footer style="position: abolus">
-    <p>Orchard | © 2017 Brett Commandeur | <a href="https://shallwi.co">Made Awesome by Shallwi</a><p>
-    </footer>
-
-    <!--
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+        </div>
+      </main>
+      <footer>
+      <p>Orchard | © 2017 Brett Commandeur | <a href="https://shallwi.co">Made Awesome by Shallwi</a><p>
+      </footer>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-    -->
 
-    <!-- Custom Scripts -->
+    <!-- Include Vue Models -->
     <script src="./scripts/UserVM.js"></script>
+    <script src="./scripts/MainVM.js"></script>
 
-    <!-- Firebase Demo -->
+    <!-- Content Loaded and Ready -->
     <script>
-
       document.addEventListener('DOMContentLoaded', function() {
-        // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // The Firebase SDK is initialized and available here!
 
-        // // Setup Authentication
-        // document.getElementById('login-google').onclick = () => {
-        //   // https://firebase.google.com/docs/auth/web/google-signin
-        //   var provider = new firebase.auth.GoogleAuthProvider();
-        //   firebase.auth().signInWithRedirect(provider);
-        // }
+        // Prepare and Mount Vue Models
         let vueModels = {
           banner: new UserVM(),
-          // app: new AppVM()
+          main: new MainVM(),
         }
 
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { console.log(snapshot) });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        // try {
-        //   let app = firebase.app();
-        //   let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-        //   document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        // } catch (e) {
-        //   console.error(e);
-        //   document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        // }
       });
     </script>
   </body>
