@@ -88,13 +88,14 @@
           <div id="user-trees">
             <input
               v-model="newTreeText"
-              v-on:keyup.enter="addNewTodo"
+              v-on:keyup.enter="addNewTree"
               placeholder="Plant a Tree"
             >
             <user-tree
               v-for="(tree, index) in trees"
               v-bind:key="tree.id"
               v-bind:title="tree.title"
+              v-bind:description="tree.description"
               v-on:remove="trees.splice(index, 1)"
             ></user-tree>
 
@@ -111,7 +112,7 @@
       document.addEventListener('DOMContentLoaded', function() {
 
         // Prepare and Mount Vue Models
-        let vueModel = new AppVM()
+        let vm = new AppVM()
 
       });
     </script>

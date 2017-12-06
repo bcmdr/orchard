@@ -1,6 +1,6 @@
 class TreeVM {
   constructor() {
-    Vue.component('tree', {
+    Vue.component('user-tree', {
       template: `
         <div id="tree-{{id}}" class="tree-card-wide mdl-card mdl-shadow--2dp">
           <div class="mdl-card__title">
