@@ -70,7 +70,7 @@
                 v-bind:key="tree.id"
                 v-bind:title="tree.title"
                 v-bind:description="tree.description"
-                v-on:remove="trees.splice(index, 1)"
+                v-on:remove="trees.splice(id, 1)"
               ></user-tree>
               <div class="new-tree mdl-cell mdl-cell--4-col">
                 <p>New Tree</p>

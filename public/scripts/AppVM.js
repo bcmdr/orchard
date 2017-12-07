@@ -28,6 +28,11 @@ class AppVM {
       ]
     })
 
+    // Firebase Refs
+    let treesRef = firebase.database().ref('trees')
+    let usersRef = firebase.database().ref('users')
+
+    // Vue Model
     let vm = new Vue({
       // element to mount to
       el: '#app',
@@ -41,24 +46,37 @@ class AppVM {
           description: '',
         },
 
-        trees: [
-          {
-            id: 1,
-            title: 'Work On Orchard',
-            description: '3 Git Pushes per Day'
-          }
-        ],
-        nextTodoId: 2,
+        // trees: [
+        //   {
+        //     id: 1,
+        //     title: 'Work On Orchard',
+        //     description: '3 Git Pushes per Day'
+        //   }
+        // ],
+        // nextTodoId: 2,
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
       firebase: {
-        users: firebase.database().ref('users')
+        trees: treesRef,
+        users: usersRef,
       },
       computed: {
         today: function() {
           var options = { weekday: 'short', month: 'short', day: 'numeric' }
           return this.date.toLocaleDateString('en-us', options)
+        },
+        newTreeValidation: function () {
+          return {
+            name: !!this.newTree.title.trim(),
+            description: !!this.newTree.description.trim(),
+          }
+        },
+        newTreeIsValid: function () {
+          var validation = this.newTreeValidation
+          return Object.keys(validation).every(function (key) {
+            return validation[key]
+          })
         }
       },
       // 'created' lifecycle hook
@@ -90,23 +108,27 @@ class AppVM {
         },
 
         addNewTree: function () {
-          if (!this.newTree.title || !this.newTree.description)
-            return
-          this.trees.push({
-            id: this.nextTreeId++,
-            title: this.newTree.title,
-            description: this.newTree.description,
-          })
-          this.newTree.title = ''
-          this.newTree.description = ''
+          if (this.newTreeIsValid) {
+            // this.trees.push({
+            //   id: this.nextTreeId++,
+            //   title: this.newTree.title,
+            //   description: this.newTree.description,
+            // })
+
+            treesRef.push({
+              title: this.newTree.title,
+              description: this.newTree.description,
+            })
+
+            this.newTree.title = ''
+            this.newTree.description = ''
+          }
         }
-
       },
-
 
     // end new
     })
-    
+
   // end constructor
   }
 // end class
