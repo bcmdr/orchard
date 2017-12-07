@@ -1,7 +1,7 @@
 function loadAppVM() {
   let userTreeComponent = {
     template: `
-      <div class="mdl-cell mdl-cell--4-col">
+      <div class="mdl-cell mdl-cell--12-col">
         <div class="user-tree tree-card-wide mdl-card mdl-shadow--2dp">
           <div class="mdl-card__title">
             <h2 class="mdl-card__title-text">{{title}}</h2>
