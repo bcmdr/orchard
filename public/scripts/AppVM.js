@@ -28,7 +28,7 @@ class AppVM {
       ]
     })
 
-    new Vue({
+    let vm = new Vue({
       // element to mount to
       el: '#app',
       // initial data
@@ -36,8 +36,11 @@ class AppVM {
         isSignedIn: false,
         signInStatusKnown: false,
         date: new Date(),
-        newTreeTitle: '',
-        newTreeDescription: '',
+        newTree: {
+          title: '',
+          description: '',
+        },
+
         trees: [
           {
             id: 1,
@@ -87,15 +90,15 @@ class AppVM {
         },
 
         addNewTree: function () {
-          if (!this.newTreeTitle || !this.newTreeDescription)
+          if (!this.newTree.title || !this.newTree.description)
             return
           this.trees.push({
             id: this.nextTreeId++,
-            title: this.newTreeTitle,
-            description: this.newTreeDescription
+            title: this.newTree.title,
+            description: this.newTree.description,
           })
-          this.newTreeTitle = ''
-          this.newTreeDescription = ''
+          this.newTree.title = ''
+          this.newTree.description = ''
         }
 
       },
@@ -103,6 +106,7 @@ class AppVM {
 
     // end new
     })
+    
   // end constructor
   }
 // end class

@@ -73,16 +73,16 @@
                 v-on:remove="trees.splice(index, 1)"
               ></user-tree>
               <div class="new-tree mdl-cell mdl-cell--4-col">
-                <p>Plant a Tree</p>
+                <p>New Tree</p>
                 <p>
                   <input
-                    v-model="newTreeTitle"
+                    v-model="newTree.title"
                     placeholder="Title"
                   >
                 </p>
                 <p>
                   <textarea
-                    v-model="newTreeDescription"
+                    v-model="newTree.description"
                     v-on:keyup.enter="addNewTree"
                     placeholder="Description"
                   ></textarea>
@@ -94,7 +94,8 @@
       </main>
     </div> <!-- end #main -->
 
-    <!-- Include Vue Model -->
+
+    <!-- Vue Model -->
     <script src="./scripts/AppVM.js"></script>
 
     <!-- Content Loaded and Ready -->
