@@ -68,9 +68,10 @@
               <user-tree
                 v-for="(tree, index) in trees"
                 v-bind:key="tree.id"
+                v-bind:id="tree.id"
                 v-bind:title="tree.title"
                 v-bind:description="tree.description"
-                v-on:remove="trees.splice(id, 1)"
+                v-on:remove="removeTree(tree['.key'])"
               ></user-tree>
               <div class="new-tree mdl-cell mdl-cell--4-col">
                 <p>New Tree</p>

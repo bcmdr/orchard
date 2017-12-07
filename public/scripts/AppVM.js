@@ -8,7 +8,7 @@ class AppVM {
               <h2 class="mdl-card__title-text">{{title}}</h2>
             </div>
             <div class="mdl-card__supporting-text">
-              <p>{{description}}</p>
+              <p>{{id}}—{{description}}</p>
             </div>
             <div class="mdl-card__actions mdl-card--border">
               <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
@@ -44,16 +44,7 @@ class AppVM {
         newTree: {
           title: '',
           description: '',
-        },
-
-        // trees: [
-        //   {
-        //     id: 1,
-        //     title: 'Work On Orchard',
-        //     description: '3 Git Pushes per Day'
-        //   }
-        // ],
-        // nextTodoId: 2,
+        }
       },
       // firebase binding
       // https://github.com/vuejs/vuefire
@@ -109,11 +100,6 @@ class AppVM {
 
         addNewTree: function () {
           if (this.newTreeIsValid) {
-            // this.trees.push({
-            //   id: this.nextTreeId++,
-            //   title: this.newTree.title,
-            //   description: this.newTree.description,
-            // })
 
             treesRef.push({
               title: this.newTree.title,
@@ -123,6 +109,11 @@ class AppVM {
             this.newTree.title = ''
             this.newTree.description = ''
           }
+        },
+
+        removeTree: function(key) {
+          console.log(key)
+          treesRef.child(key).remove()
         }
       },
 
