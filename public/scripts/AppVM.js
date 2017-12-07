@@ -1,126 +1,125 @@
-class AppVM {
-  constructor() {
-    Vue.component('user-tree', {
-      template: `
-        <div class="mdl-cell mdl-cell--4-col">
-          <div class="user-tree tree-card-wide mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-              <h2 class="mdl-card__title-text">{{title}}</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-              <p>{{description}}</p>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Done
-              </a>
-            </div>
-            <div class="mdl-card__menu">
-              <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
-                <i class="material-icons">remove_circle_outline</i>
-              </button>
-            </div>
+function loadAppVM() {
+  let userTreeComponent = {
+    template: `
+      <div class="mdl-cell mdl-cell--4-col">
+        <div class="user-tree tree-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{title}}</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            <p>{{description}}</p>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Done
+            </a>
+          </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
+              <i class="material-icons">remove_circle_outline</i>
+            </button>
           </div>
         </div>
-      `,
-      props: [
-        'id', 'title', 'description'
-      ]
-    })
+      </div>
+    `,
+    props: [
+      'id', 'title', 'description'
+    ]
+  }
 
-    // Firebase Refs
-    let treesRef = firebase.database().ref('trees')
-    let usersRef = firebase.database().ref('users')
+  // Firebase Refs
+  let treesRef = firebase.database().ref('trees')
+  let usersRef = firebase.database().ref('users')
 
-    // Vue Model
-    let vm = new Vue({
-      // element to mount to
-      el: '#app',
-      // initial data
-      data: {
-        isSignedIn: false,
-        signInStatusKnown: false,
-        date: new Date(),
-        newTree: {
-          title: '',
-          description: '',
+  // Vue Model
+  let vm = new Vue({
+    // element to mount to
+    el: '#app',
+    // initial data
+    data: {
+      isSignedIn: false,
+      signInStatusKnown: false,
+      date: new Date(),
+      newTree: {
+        title: '',
+        description: '',
+      }
+    },
+    // firebase binding
+    // https://github.com/vuejs/vuefire
+    firebase: {
+      trees: treesRef,
+      users: usersRef,
+    },
+    computed: {
+      today: function() {
+        var options = { weekday: 'short', month: 'short', day: 'numeric' }
+        return this.date.toLocaleDateString('en-us', options)
+      },
+      newTreeValidation: function () {
+        return {
+          name: !!this.newTree.title.trim(),
+          description: !!this.newTree.description.trim(),
         }
       },
-      // firebase binding
-      // https://github.com/vuejs/vuefire
-      firebase: {
-        trees: treesRef,
-        users: usersRef,
+      newTreeIsValid: function () {
+        var validation = this.newTreeValidation
+        return Object.keys(validation).every(function (key) {
+          return validation[key]
+        })
+      }
+    },
+    // 'created' lifecycle hook
+    created: function () {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) console.log(user)
+        this.isSignedIn = (user) ? true : false
+        this.signInStatusKnown = true
+      });
+    },
+
+    // methods
+    methods: {
+      signinGoogle: function () {
+        // https://firebase.google.com/docs/auth/web/google-signin
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
       },
-      computed: {
-        today: function() {
-          var options = { weekday: 'short', month: 'short', day: 'numeric' }
-          return this.date.toLocaleDateString('en-us', options)
-        },
-        newTreeValidation: function () {
-          return {
-            name: !!this.newTree.title.trim(),
-            description: !!this.newTree.description.trim(),
-          }
-        },
-        newTreeIsValid: function () {
-          var validation = this.newTreeValidation
-          return Object.keys(validation).every(function (key) {
-            return validation[key]
-          })
-        }
-      },
-      // 'created' lifecycle hook
-      created: function () {
-        firebase.auth().onAuthStateChanged(user => {
-          if (user) console.log(user)
-          this.isSignedIn = (user) ? true : false
-          this.signInStatusKnown = true
+
+      signoutGoogle: function () {
+        // https://firebase.google.com/docs/auth/web/google-signin
+        firebase.auth().signOut().then(function() {
+          // Sign-out successful.
+          console.log("Signout Successful")
+        }).catch(function(error) {
+          // An error happened.
+          console.log(error)
         });
       },
 
-      // methods
-      methods: {
-        signinGoogle: function () {
-          // https://firebase.google.com/docs/auth/web/google-signin
-          var provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithRedirect(provider);
-        },
+      addNewTree: function () {
+        if (this.newTreeIsValid) {
 
-        signoutGoogle: function () {
-          // https://firebase.google.com/docs/auth/web/google-signin
-          firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-            console.log("Signout Successful")
-          }).catch(function(error) {
-            // An error happened.
-            console.log(error)
-          });
-        },
+          treesRef.push({
+            title: this.newTree.title,
+            description: this.newTree.description,
+          })
 
-        addNewTree: function () {
-          if (this.newTreeIsValid) {
-
-            treesRef.push({
-              title: this.newTree.title,
-              description: this.newTree.description,
-            })
-
-            this.newTree.title = ''
-            this.newTree.description = ''
-          }
-        },
-
-        removeTree: function(key) {
-          console.log(key)
-          treesRef.child(key).remove()
+          this.newTree.title = ''
+          this.newTree.description = ''
         }
       },
 
-    // end new
-    })
+      removeTree: function(key) {
+        console.log(key)
+        treesRef.child(key).remove()
+      }
+    },
 
-  // end constructor
-  }
-// end class
+    components: {
+      'user-tree': userTreeComponent
+    }
+
+  // end new
+  })
 }
