@@ -58,7 +58,7 @@ function loadAppVM() {
     // computed
     computed: {
       today: function() {
-        var options = { weekday: 'short', month: 'short', day: 'numeric' }
+        var options = { weekday: 'long', month: 'short', day: 'numeric' }
         return this.date.toLocaleDateString('en-us', options)
       },
       newFruitValidation: function () {
