@@ -69,8 +69,10 @@
                 v-for="(fruit, index) in fruits"
                 v-bind:key="fruit.id"
                 v-bind:title="fruit.title"
+                v-bind:collect-count="fruit.collectCount"
                 v-on:remove="removeFruit(fruit['.key'])"
-                v-on:decrement=
+                v-on:increment="incrementCollectCount(fruit['.key'])"
+                v-on:decrement="decrementCollectCount(fruit['.key'])"
               ></user-fruit>
               <div v-if="fruitsKnownEmpty" class="new-fruit mdl-cell mdl-cell--4-col">
                 <form

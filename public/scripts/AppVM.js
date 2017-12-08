@@ -7,10 +7,10 @@ function loadAppVM() {
             <h2 class="mdl-card__title-text">{{title}}</h2>
           </div>
           <div class="mdl-card__actions mdl-card--border">
-            <a class="collect-button mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            <a class="collect-button mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('increment')">
               Collect
             </a>
-            <button class="fruit-indicator mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('decrement')">
+            <button v-on:click="$emit('decrement')" v-for="n in collectCount" class="fruit-indicator mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
               <i class="material-icons">check_circle</i>
             </button>
           </div>
@@ -23,7 +23,7 @@ function loadAppVM() {
       </div>
     `,
     props: [
-      'title'
+      'title', 'collectCount'
     ]
   }
 
@@ -43,7 +43,8 @@ function loadAppVM() {
       date: new Date(),
       newFruit: {
         title: '',
-      }
+        collectCount: 0,
+      },
     },
     // firebase binding
     // https://github.com/vuejs/vuefire
@@ -73,6 +74,24 @@ function loadAppVM() {
       }
     },
 
+    created: function () {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) console.log(user)
+        this.isSignedIn = (user) ? true : false
+        this.signInStatusKnown = true
+      });
+    },
+
+    mounted: function () {
+      fruitsRef.once('value', snapshot => {
+        this.loading = false
+      })
+    },
+
+    components: {
+      'user-fruit': userFruitComponent
+    },
+
     // methods
     methods: {
       signinGoogle: function () {
@@ -94,42 +113,34 @@ function loadAppVM() {
 
       addNewFruit: function () {
         if (this.newFruitIsValid) {
-
-          fruitsRef.push({
-            title: this.newFruit.title,
-          })
-
+          fruitsRef.push(this.newFruit)
           this.newFruit.title = ''
+          this.newFruit.collectCount = 0
         }
       },
 
       removeFruit: function(key) {
-        console.log(key)
         fruitsRef.child(key).remove()
       },
 
-      decrementFruit: function() {
+      incrementCollectCount: function(key) {
+        fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
+          if (typeof collectCount === 'number') {
+            collectCount = collectCount + 1;
+          }
+          return collectCount;
+        })
+      },
 
+      decrementCollectCount: function(key) {
+        fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
+          if (typeof collectCount === 'number') {
+            collectCount = collectCount - 1;
+          }
+          return collectCount;
+        })
       }
     },
-
-    created: function () {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) console.log(user)
-        this.isSignedIn = (user) ? true : false
-        this.signInStatusKnown = true
-      });
-    },
-
-    mounted: function () {
-      fruitsRef.once('value', snapshot => {
-        this.loading = false
-      })
-    },
-
-    components: {
-      'user-fruit': userFruitComponent
-    }
 
   // end new
   })
