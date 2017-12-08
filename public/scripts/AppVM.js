@@ -29,7 +29,6 @@ function loadAppVM() {
 
   // Firebase Refs
   let fruitsRef = firebase.database().ref('fruits')
-  let usersRef = firebase.database().ref('users')
 
   // Vue Model
   let vm = new Vue({
@@ -37,21 +36,26 @@ function loadAppVM() {
     el: '#app',
     // initial data
     data: {
+      fruits: [],
+      userId: 'anonymous',
       loading: true,
       isSignedIn: false,
       signInStatusKnown: false,
       date: new Date(),
       newFruit: {
-        title: '',
-        collectCount: 0,
+        title: ''
       },
     },
     // firebase binding
     // https://github.com/vuejs/vuefire
-    firebase: {
-      fruits: fruitsRef,
-      users: usersRef,
-    },
+    // firebase: function () {
+    //   console.log(this.fruitsRef)
+    //   return {
+    //     fruits: this.fruitsRef
+    //   }
+    // },
+
+    // computed
     computed: {
       today: function() {
         var options = { weekday: 'short', month: 'short', day: 'numeric' }
@@ -70,24 +74,38 @@ function loadAppVM() {
       },
       fruitsKnownEmpty: function () {
         // true if loaded and fruits array is empty
-        return !(this.loading) && (this.fruits.length === 0)
+        // return !(this.loading) && (this.fruits.length === 0)
+        return true //TODO: refactor out
+      },
+      fruitsRef: function () {
+        return fruitsRef.child(this.userId)
       }
     },
 
+    // lifecycle hooks
     created: function () {
       firebase.auth().onAuthStateChanged(user => {
-        if (user) console.log(user)
-        this.isSignedIn = (user) ? true : false
+        let vm = this
+
+        if (user) {
+          vm.userId = user.uid
+          vm.$bindAsArray('fruits', fruitsRef.child(user.uid), function () {
+            // cancel callback
+            vm.fruits = []
+          })
+        }
+
+        this.isSignedIn = (user) ? true : false // TODO refactor to computed value
         this.signInStatusKnown = true
       });
     },
-
     mounted: function () {
-      fruitsRef.once('value', snapshot => {
+      this.fruitsRef.once('value', snapshot => {
         this.loading = false
       })
     },
 
+    // components
     components: {
       'user-fruit': userFruitComponent
     },
@@ -99,7 +117,6 @@ function loadAppVM() {
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithRedirect(provider);
       },
-
       signoutGoogle: function () {
         // https://firebase.google.com/docs/auth/web/google-signin
         firebase.auth().signOut().then(function() {
@@ -110,34 +127,35 @@ function loadAppVM() {
           console.log(error)
         });
       },
-
       addNewFruit: function () {
-        if (this.newFruitIsValid) {
-          fruitsRef.push(this.newFruit)
+        let userId = firebase.auth().currentUser.uid
+        if (this.newFruitIsValid && userId) {
+          this.fruitsRef.push({
+            title: this.newFruit.title,
+            collectCount: 0,
+          })
           this.newFruit.title = ''
-          this.newFruit.collectCount = 0
         }
       },
-
       removeFruit: function(key) {
-        fruitsRef.child(key).remove()
+        this.fruitsRef.child(key).remove()
       },
-
+      incrementBy: function(number, amount) {
+        if (typeof number === 'number') {
+          number = number + amount;
+        }
+        return number;
+      },
       incrementCollectCount: function(key) {
-        fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
-          if (typeof collectCount === 'number') {
-            collectCount = collectCount + 1;
-          }
-          return collectCount;
+        let incrementBy = this.incrementBy
+        this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
+          return incrementBy(collectCount, 1)
         })
       },
-
       decrementCollectCount: function(key) {
-        fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
-          if (typeof collectCount === 'number') {
-            collectCount = collectCount - 1;
-          }
-          return collectCount;
+        let incrementBy = this.incrementBy
+        this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
+          return incrementBy(collectCount, -1)
         })
       }
     },

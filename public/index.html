@@ -63,7 +63,7 @@
       </div>
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div id="user-fruits">
+          <div v-if="isSignedIn" id="user-fruits">
             <div class="mdl-grid">
               <user-fruit
                 v-for="(fruit, index) in fruits"
@@ -74,10 +74,13 @@
                 v-on:increment="incrementCollectCount(fruit['.key'])"
                 v-on:decrement="decrementCollectCount(fruit['.key'])"
               ></user-fruit>
-              <div v-if="fruitsKnownEmpty" class="new-fruit mdl-cell mdl-cell--4-col">
+            </div>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
                 <form
+                  style="text-align: right"
                   v-on:submit.prevent="addNewFruit">
-                  <label for="newFruitInput">Create a Fruit:</label>
+                  <label for="newFruitInput">Plant New Tree:</label>
                   <input
                     id="newFruitInput"
                     v-model="newFruit.title"
