@@ -1,3 +1,7 @@
+body {
+  background: #FFE7D3
+}
+
 /* General Styles */
 a:hover {
   cursor: pointer;
@@ -12,18 +16,23 @@ a:hover {
   display: none;
 }
 
+/* Header Styles */
 
-/* Tree Card Styles */
+.mdl-layout__header {
+  background: #267F3C
+}
 
-.tree-card-wide.mdl-card {
+/* Fruit Card Styles */
+
+.fruit-card-wide.mdl-card {
   width: 100%;
   margin: auto;
   min-height: 1px; /* Override 200px default, scale with content */
 }
-.tree-card-wide > .mdl-card__title {
+.fruit-card-wide > .mdl-card__title {
   color: #fff;
-  background: #34623F
+  background: #FC440F
 }
-.tree-card-wide > .mdl-card__menu {
+.fruit-card-wide > .mdl-card__menu {
   color: #fff;
 }

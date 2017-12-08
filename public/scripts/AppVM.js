@@ -1,34 +1,34 @@
 function loadAppVM() {
-  let userTreeComponent = {
+  let userFruitComponent = {
     template: `
       <div class="mdl-cell mdl-cell--12-col">
-        <div class="user-tree tree-card-wide mdl-card mdl-shadow--2dp">
+        <div class="user-fruit fruit-card-wide mdl-card mdl-shadow--2dp">
           <div class="mdl-card__title">
             <h2 class="mdl-card__title-text">{{title}}</h2>
           </div>
-          <div class="mdl-card__supporting-text">
-            <p>{{description}}</p>
-          </div>
           <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Done
+            <a class="collect-button mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Collect
             </a>
+            <button class="fruit-indicator mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('decrement')">
+              <i class="material-icons">check_circle</i>
+            </button>
           </div>
           <div class="mdl-card__menu">
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
-              <i class="material-icons">remove_circle_outline</i>
+              <i class="material-icons">edit</i>
             </button>
           </div>
         </div>
       </div>
     `,
     props: [
-      'id', 'title', 'description'
+      'title'
     ]
   }
 
   // Firebase Refs
-  let treesRef = firebase.database().ref('trees')
+  let fruitsRef = firebase.database().ref('fruits')
   let usersRef = firebase.database().ref('users')
 
   // Vue Model
@@ -37,18 +37,18 @@ function loadAppVM() {
     el: '#app',
     // initial data
     data: {
+      loading: true,
       isSignedIn: false,
       signInStatusKnown: false,
       date: new Date(),
-      newTree: {
+      newFruit: {
         title: '',
-        description: '',
       }
     },
     // firebase binding
     // https://github.com/vuejs/vuefire
     firebase: {
-      trees: treesRef,
+      fruits: fruitsRef,
       users: usersRef,
     },
     computed: {
@@ -56,26 +56,21 @@ function loadAppVM() {
         var options = { weekday: 'short', month: 'short', day: 'numeric' }
         return this.date.toLocaleDateString('en-us', options)
       },
-      newTreeValidation: function () {
+      newFruitValidation: function () {
         return {
-          name: !!this.newTree.title.trim(),
-          description: !!this.newTree.description.trim(),
+          name: !!this.newFruit.title.trim(),
         }
       },
-      newTreeIsValid: function () {
-        var validation = this.newTreeValidation
+      newFruitIsValid: function () {
+        var validation = this.newFruitValidation
         return Object.keys(validation).every(function (key) {
           return validation[key]
         })
+      },
+      fruitsKnownEmpty: function () {
+        // true if loaded and fruits array is empty
+        return !(this.loading) && (this.fruits.length === 0)
       }
-    },
-    // 'created' lifecycle hook
-    created: function () {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) console.log(user)
-        this.isSignedIn = (user) ? true : false
-        this.signInStatusKnown = true
-      });
     },
 
     // methods
@@ -97,27 +92,43 @@ function loadAppVM() {
         });
       },
 
-      addNewTree: function () {
-        if (this.newTreeIsValid) {
+      addNewFruit: function () {
+        if (this.newFruitIsValid) {
 
-          treesRef.push({
-            title: this.newTree.title,
-            description: this.newTree.description,
+          fruitsRef.push({
+            title: this.newFruit.title,
           })
 
-          this.newTree.title = ''
-          this.newTree.description = ''
+          this.newFruit.title = ''
         }
       },
 
-      removeTree: function(key) {
+      removeFruit: function(key) {
         console.log(key)
-        treesRef.child(key).remove()
+        fruitsRef.child(key).remove()
+      },
+
+      decrementFruit: function() {
+
       }
     },
 
+    created: function () {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) console.log(user)
+        this.isSignedIn = (user) ? true : false
+        this.signInStatusKnown = true
+      });
+    },
+
+    mounted: function () {
+      fruitsRef.once('value', snapshot => {
+        this.loading = false
+      })
+    },
+
     components: {
-      'user-tree': userTreeComponent
+      'user-fruit': userFruitComponent
     }
 
   // end new

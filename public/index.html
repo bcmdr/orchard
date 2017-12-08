@@ -44,7 +44,7 @@
           <nav class="mdl-navigation">
             <div id="user">
               <div v-if="signInStatusKnown">
-                <a v-if="isSignedIn" class="mdl-navigation__link"><i class="material-icons">add_circle</i></a>
+                <a v-if="isSignedIn" class="mdl-navigation__link"><i class="material-icons">account_circle</i></a>
                 <div v-else>
                   <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
                 </div>
@@ -63,32 +63,27 @@
       </div>
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div id="user-trees">
+          <div id="user-fruits">
             <div class="mdl-grid">
-              <user-tree
-                v-for="(tree, index) in trees"
-                v-bind:key="tree.id"
-                v-bind:id="tree.id"
-                v-bind:title="tree.title"
-                v-bind:description="tree.description"
-                v-on:remove="removeTree(tree['.key'])"
-              ></user-tree>
-              <!-- <div class="new-tree mdl-cell mdl-cell--4-col">
-                <p>New Tree</p>
-                <p>
+              <user-fruit
+                v-for="(fruit, index) in fruits"
+                v-bind:key="fruit.id"
+                v-bind:title="fruit.title"
+                v-on:remove="removeFruit(fruit['.key'])"
+                v-on:decrement=
+              ></user-fruit>
+              <div v-if="fruitsKnownEmpty" class="new-fruit mdl-cell mdl-cell--4-col">
+                <form
+                  v-on:submit.prevent="addNewFruit">
+                  <label for="newFruitInput">Create a Fruit:</label>
                   <input
-                    v-model="newTree.title"
-                    placeholder="Title"
+                    id="newFruitInput"
+                    v-model="newFruit.title"
+                    placeholder="Enter a daily goal"
                   >
-                </p>
-                <p>
-                  <textarea
-                    v-model="newTree.description"
-                    v-on:keyup.enter="addNewTree"
-                    placeholder="Description"
-                  ></textarea>
-                </p>
-              </div> -->
+                  <input type="submit" value="Grow">
+                </form>
+              </div>
             </div>
           </div>
         </section>
