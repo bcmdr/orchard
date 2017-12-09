@@ -125,11 +125,6 @@ function loadAppVM() {
               // if so, save and set successive sign in data
               vm.$bindAsObject('user', this.usersRef.child(userId))
             }
-
-
-            // this.user.totalCollectCount = snapshot.val().totalCollectCount
-            // let dateAsNow = snapshot.val().lastSignInDate
-            // this.user.lastSignInDate = new Date(dateAsNow)
           })
 
         }
@@ -196,28 +191,7 @@ function loadAppVM() {
             return (typeof value === 'number') ? value += amount : value
           })
         })
-
-        // this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
-        //   return incrementBy(collectCount, 1)
-        // })
-        // this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(totalCollectCount => {
-        //   return incrementBy(totalCollectCount, 1)
-        // })
       },
-    //   decrementCollectCount: function(key) {
-    //     let currentUser = firebase.auth().currentUser
-    //     let dbRefs = [
-    //       this.fruitsRef.child(key).child('collectCount'),
-    //       this.usersRef.child(currentUser.uid).child('totalCollectCount'),
-    //     ]
-    //     dbRefs.forEach(ref => {
-    //       ref.transaction(function(value) {
-    //         return (typeof value === 'number') ? value += -1 : value
-    //       })
-    //     })
-    //   }
-    // },
-
-  // end new
-  })
-}
+    } // end {methods}
+  }) // end new
+} // end funciton
