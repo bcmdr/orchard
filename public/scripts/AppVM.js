@@ -138,10 +138,7 @@ function loadAppVM() {
     },
     // Mounted lifecycle hook
     mounted: function () {
-      // check if database is available and if so, mark "not loading"
-      // this.fruitsRef.once('value', snapshot => {
-      //   this.loading = false
-      // })
+      return
     },
 
     // components
