@@ -183,32 +183,41 @@ function loadAppVM() {
       removeFruit: function(key) {
         this.fruitsRef.child(key).remove()
       },
-      incrementBy: function(number, amount) {
-        if (typeof number === 'number') {
-          number = number + amount;
-        }
-        return number;
-      },
-      incrementCollectCount: function(key) {
-        let incrementBy = this.incrementBy
-        this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
-          return incrementBy(collectCount, 1)
+      incrementCollectCountBy: function(key) {
+        // let incrementBy = function(number, amount) {
+        //   if (typeof number === 'number') {
+        //     number = number + amount;
+        //   }
+        //   return number;
+        // }
+        let currentUser = firebase.auth().currentUser
+        let dbRefs = [
+          this.fruitsRef.child(key).child('collectCount'),
+          this.usersRef.child(currentUser.uid).child('totalCollectCount'),
+        ]
+        dbRefs.forEach(ref => {
+          ref.transaction(function(value) {
+            return (typeof value === 'number') ? value += 1 : value
+          })
         })
 
-        let currentUser = firebase.auth().currentUser
-        this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(totalCollectCount => {
-          return incrementBy(totalCollectCount, 1)
-        })
+        // this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
+        //   return incrementBy(collectCount, 1)
+        // })
+        // this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(totalCollectCount => {
+        //   return incrementBy(totalCollectCount, 1)
+        // })
       },
       decrementCollectCount: function(key) {
-        let incrementBy = this.incrementBy
-        this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
-          return incrementBy(collectCount, -1)
-        })
-
         let currentUser = firebase.auth().currentUser
-        this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(totalCollectCount => {
-          return incrementBy(totalCollectCount, -1)
+        let dbRefs = [
+          this.fruitsRef.child(key).child('collectCount'),
+          this.usersRef.child(currentUser.uid).child('totalCollectCount'),
+        ]
+        dbRefs.forEach(ref => {
+          ref.transaction(function(value) {
+            return (typeof value === 'number') ? value += -1 : value
+          })
         })
       }
     },
