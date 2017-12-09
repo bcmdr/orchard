@@ -41,7 +41,6 @@ function loadAppVM() {
       fruits: [],
       user: {},
       // vue binded
-      userId: 'anonymous',
       usersRef: usersRef,
       loading: true,
       isSignedIn: false,
@@ -84,8 +83,19 @@ function loadAppVM() {
       },
       // TODO: refactor to "user fruits ref"
       fruitsRef: function () {
-        return fruitsRef.child(this.userId)
-      }
+        let currentUser = firebase.auth().currentUser
+        if (!currentUser) {
+          throw new Error('Not Signed In')
+        }
+        return fruitsRef.child(currentUser.uid)
+      },
+      userRef: function () {
+        let currentUser = firebase.auth().currentUser
+        if (!currentUser) {
+          throw new Error('Not Signed In')
+        }
+        return currentUser && usersRef.child(currentUser.uid)
+      },
     },
 
     // lifecycle hooks
@@ -110,12 +120,12 @@ function loadAppVM() {
               this.usersRef.child(userId).set({
                 totalCollectCount: 0,
                 lastSignInDate: Date.now(),
-              });
-
-              return
+              })
+            } else {
+              // if so, save and set successive sign in data
+              vm.$bindAsObject('user', this.usersRef.child(userId))
             }
-            // if so, save and set successive sign in data
-            vm.$bindAsObject('user', this.usersRef.child(userId))
+
 
             // this.user.totalCollectCount = snapshot.val().totalCollectCount
             // let dateAsNow = snapshot.val().lastSignInDate
@@ -126,6 +136,7 @@ function loadAppVM() {
 
         this.isSignedIn = (user) ? true : false // TODO refactor to computed value
         this.signInStatusKnown = true
+        this.loading = false
         console.log(user)
 
       });
@@ -133,9 +144,9 @@ function loadAppVM() {
     // Mounted lifecycle hook
     mounted: function () {
       // check if database is available and if so, mark "not loading"
-      this.fruitsRef.once('value', snapshot => {
-        this.loading = false
-      })
+      // this.fruitsRef.once('value', snapshot => {
+      //   this.loading = false
+      // })
     },
 
     // components
@@ -161,8 +172,7 @@ function loadAppVM() {
         });
       },
       addNewFruit: function () {
-        let userId = firebase.auth().currentUser.uid
-        if (this.newFruitIsValid && userId) {
+        if (this.newFruitIsValid) {
           this.fruitsRef.push({
             title: this.newFruit.title,
             collectCount: 0,
@@ -184,11 +194,21 @@ function loadAppVM() {
         this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
           return incrementBy(collectCount, 1)
         })
+
+        let currentUser = firebase.auth().currentUser
+        this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(totalCollectCount => {
+          return incrementBy(totalCollectCount, 1)
+        })
       },
       decrementCollectCount: function(key) {
         let incrementBy = this.incrementBy
         this.fruitsRef.child(key).child('collectCount').transaction(function(collectCount) {
           return incrementBy(collectCount, -1)
+        })
+
+        let currentUser = firebase.auth().currentUser
+        this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(totalCollectCount => {
+          return incrementBy(totalCollectCount, -1)
         })
       }
     },
