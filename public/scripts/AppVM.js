@@ -29,6 +29,7 @@ function loadAppVM() {
 
   // Firebase Refs
   let fruitsRef = firebase.database().ref('fruits')
+  let usersRef = firebase.databse().ref('users')
 
   // Vue Model
   let vm = new Vue({
@@ -97,6 +98,7 @@ function loadAppVM() {
 
         this.isSignedIn = (user) ? true : false // TODO refactor to computed value
         this.signInStatusKnown = true
+        this.saveUser(user)
       });
     },
     mounted: function () {
@@ -126,6 +128,12 @@ function loadAppVM() {
           // An error happened.
           console.log(error)
         });
+      },
+      saveUser: function() {
+        // check if user exists in database
+
+
+        // if not, create a new user object in the database
       },
       addNewFruit: function () {
         let userId = firebase.auth().currentUser.uid
