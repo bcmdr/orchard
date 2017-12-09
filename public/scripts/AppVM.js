@@ -29,7 +29,7 @@ function loadAppVM() {
 
   // Firebase Refs
   let fruitsRef = firebase.database().ref('fruits')
-  let usersRef = firebase.databse().ref('users')
+  let usersRef = firebase.database().ref('users')
 
   // Vue Model
   let vm = new Vue({
@@ -39,10 +39,16 @@ function loadAppVM() {
     data: {
       fruits: [],
       userId: 'anonymous',
+      usersRef: usersRef,
       loading: true,
       isSignedIn: false,
       signInStatusKnown: false,
       date: new Date(),
+      user: {
+        lastSignInDate: null,
+        displayName: '',
+        totalCollectCount: 0,
+      },
       newFruit: {
         title: ''
       },
@@ -78,6 +84,7 @@ function loadAppVM() {
         // return !(this.loading) && (this.fruits.length === 0)
         return true //TODO: refactor out
       },
+      // TODO: refactor to "user fruits ref"
       fruitsRef: function () {
         return fruitsRef.child(this.userId)
       }
@@ -85,23 +92,49 @@ function loadAppVM() {
 
     // lifecycle hooks
     created: function () {
+      // handle user state changes (sign in, sign out)
       firebase.auth().onAuthStateChanged(user => {
         let vm = this
 
         if (user) {
-          vm.userId = user.uid
-          vm.$bindAsArray('fruits', fruitsRef.child(user.uid), function () {
-            // cancel callback
+          let userId = user.uid
+          vm.userId = userId
+          // bind vue array 'fruits' to user fruits reference in db
+          vm.$bindAsArray('fruits', fruitsRef.child(userId), function () {
+            // callback on cancel fruits binding
             vm.fruits = []
           })
+
+          // check if user exists in database
+          this.usersRef.child(userId).once('value', snapshot => {
+            // if not, create a new user object in the database
+            if (!snapshot.val()) {
+              this.usersRef.child(userId).set({
+                totalCollectCount: 0,
+                lastSignInDate: Date.now(),
+              });
+
+              return
+            }
+            // if so, save and set successive sign in data
+            this.user.totalCollectCount = snapshot.val().totalCollectCount
+            let dateAsNow = snapshot.val().lastSignInDate
+            this.user.lastSignInDate = new Date(dateAsNow)
+          })
+
+          this.user.displayName = user.displayName
         }
 
         this.isSignedIn = (user) ? true : false // TODO refactor to computed value
         this.signInStatusKnown = true
-        this.saveUser(user)
+        console.log(user)
+        console.log(this.user)
+
       });
     },
+    // Mounted lifecycle hook
     mounted: function () {
+      // check if database is available and if so, mark "not loading"
       this.fruitsRef.once('value', snapshot => {
         this.loading = false
       })
@@ -128,12 +161,6 @@ function loadAppVM() {
           // An error happened.
           console.log(error)
         });
-      },
-      saveUser: function() {
-        // check if user exists in database
-
-
-        // if not, create a new user object in the database
       },
       addNewFruit: function () {
         let userId = firebase.auth().currentUser.uid
