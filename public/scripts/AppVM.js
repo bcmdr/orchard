@@ -42,7 +42,6 @@ function loadAppVM() {
       user: {},
       // vue binded
       usersRef: usersRef,
-      loading: true,
       isSignedIn: false,
       signInStatusKnown: false,
       date: new Date(),
@@ -61,6 +60,9 @@ function loadAppVM() {
 
     // computed
     computed: {
+      fruitsLoaded: function() {
+        return this.fruits.length > 0
+      },
       today: function() {
         var options = { weekday: 'long', month: 'short', day: 'numeric' }
         return this.date.toLocaleDateString('en-us', options)
@@ -131,8 +133,6 @@ function loadAppVM() {
 
         this.isSignedIn = (user) ? true : false // TODO refactor to computed value
         this.signInStatusKnown = true
-        this.loading = false
-        console.log(user)
 
       });
     },

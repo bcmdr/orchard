@@ -75,18 +75,31 @@
                 v-on:decrement="incrementCollectCountBy(fruit['.key'], -1)"
               ></user-fruit>
             </div>
-            <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--12-col">
-                <form
-                  v-on:submit.prevent="addNewFruit">
-                  <input
-                    id="newFruitInput"
-                    v-model="newFruit.title"
-                    placeholder="New Daily Goal"
-                  >
-                  <input type="submit" value="Grow">
-                </form>
+            <div v-if="fruitsLoaded" class="newFruitFormWrapper">
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                  <form
+                    v-on:submit.prevent="addNewFruit">
+                    <input
+                      id="newFruitInput"
+                      v-model="newFruit.title"
+                      placeholder="New Daily Goal"
+                    >
+                    <input type="submit" value="Grow">
+                  </form>
+                </div>
               </div>
+            </div>
+          </div>
+          <div v-else><!-- User Not Signed In -->
+            <div v-cloak class="greeting">
+              <h1>Welcome to Orchard</h1>
+              <h2>Orchard is Home to Your Trees</h2>
+              <p>
+                Each tree represents a daily goal. Complete that goal to collect
+                a fruit for that tree. Orchard resets your trees every day, but
+                also tracks your total fruit collected. More fruit -> Better you.
+              </p>
             </div>
           </div>
         </section>
