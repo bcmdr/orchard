@@ -71,8 +71,8 @@
                 v-bind:title="fruit.title"
                 v-bind:collect-count="fruit.collectCount"
                 v-on:remove="removeFruit(fruit['.key'])"
-                v-on:increment="incrementCollectCount(fruit['.key'])"
-                v-on:decrement="decrementCollectCount(fruit['.key'])"
+                v-on:increment="incrementCollectCountBy(fruit['.key'], 1)"
+                v-on:decrement="incrementCollectCountBy(fruit['.key'], -1)"
               ></user-fruit>
             </div>
             <div class="mdl-grid">

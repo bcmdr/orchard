@@ -183,13 +183,9 @@ function loadAppVM() {
       removeFruit: function(key) {
         this.fruitsRef.child(key).remove()
       },
-      incrementCollectCountBy: function(key) {
-        // let incrementBy = function(number, amount) {
-        //   if (typeof number === 'number') {
-        //     number = number + amount;
-        //   }
-        //   return number;
-        // }
+      incrementCollectCountBy: function(key, amount) {
+        // Called on collection or uncollection of fruit
+        // Needs to update local and total fruit counts
         let currentUser = firebase.auth().currentUser
         let dbRefs = [
           this.fruitsRef.child(key).child('collectCount'),
@@ -197,7 +193,7 @@ function loadAppVM() {
         ]
         dbRefs.forEach(ref => {
           ref.transaction(function(value) {
-            return (typeof value === 'number') ? value += 1 : value
+            return (typeof value === 'number') ? value += amount : value
           })
         })
 
@@ -208,19 +204,19 @@ function loadAppVM() {
         //   return incrementBy(totalCollectCount, 1)
         // })
       },
-      decrementCollectCount: function(key) {
-        let currentUser = firebase.auth().currentUser
-        let dbRefs = [
-          this.fruitsRef.child(key).child('collectCount'),
-          this.usersRef.child(currentUser.uid).child('totalCollectCount'),
-        ]
-        dbRefs.forEach(ref => {
-          ref.transaction(function(value) {
-            return (typeof value === 'number') ? value += -1 : value
-          })
-        })
-      }
-    },
+    //   decrementCollectCount: function(key) {
+    //     let currentUser = firebase.auth().currentUser
+    //     let dbRefs = [
+    //       this.fruitsRef.child(key).child('collectCount'),
+    //       this.usersRef.child(currentUser.uid).child('totalCollectCount'),
+    //     ]
+    //     dbRefs.forEach(ref => {
+    //       ref.transaction(function(value) {
+    //         return (typeof value === 'number') ? value += -1 : value
+    //       })
+    //     })
+    //   }
+    // },
 
   // end new
   })
