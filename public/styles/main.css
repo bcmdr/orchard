@@ -3,9 +3,6 @@ body {
 }
 
 /* General Styles */
-a:hover {
-  cursor: pointer;
-}
 
 /* Remove excess side padding on top right header item */
 .mdl-layout__header-row {

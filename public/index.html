@@ -44,7 +44,7 @@
           <nav class="mdl-navigation">
             <div id="user">
               <div v-if="signInStatusKnown">
-                <a v-if="isSignedIn" class="mdl-navigation__link"><i class="material-icons">account_circle</i></a>
+                <a v-if="isSignedIn" class="mdl-navigation__link">{{user.totalCollectCount}} <i class="material-icons">check_circle</i></a>
                 <div v-else>
                   <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
                 </div>
@@ -78,13 +78,11 @@
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--12-col">
                 <form
-                  style="text-align: right"
                   v-on:submit.prevent="addNewFruit">
-                  <label for="newFruitInput">Add Fruit:</label>
                   <input
                     id="newFruitInput"
                     v-model="newFruit.title"
-                    placeholder="Enter a daily goal"
+                    placeholder="New Daily Goal"
                   >
                   <input type="submit" value="Grow">
                 </form>

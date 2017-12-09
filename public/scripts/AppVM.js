@@ -37,18 +37,16 @@ function loadAppVM() {
     el: '#app',
     // initial data
     data: {
+      // firebase binded
       fruits: [],
+      user: {},
+      // vue binded
       userId: 'anonymous',
       usersRef: usersRef,
       loading: true,
       isSignedIn: false,
       signInStatusKnown: false,
       date: new Date(),
-      user: {
-        lastSignInDate: null,
-        displayName: '',
-        totalCollectCount: 0,
-      },
       newFruit: {
         title: ''
       },
@@ -117,18 +115,18 @@ function loadAppVM() {
               return
             }
             // if so, save and set successive sign in data
-            this.user.totalCollectCount = snapshot.val().totalCollectCount
-            let dateAsNow = snapshot.val().lastSignInDate
-            this.user.lastSignInDate = new Date(dateAsNow)
+            vm.$bindAsObject('user', this.usersRef.child(userId))
+
+            // this.user.totalCollectCount = snapshot.val().totalCollectCount
+            // let dateAsNow = snapshot.val().lastSignInDate
+            // this.user.lastSignInDate = new Date(dateAsNow)
           })
 
-          this.user.displayName = user.displayName
         }
 
         this.isSignedIn = (user) ? true : false // TODO refactor to computed value
         this.signInStatusKnown = true
         console.log(user)
-        console.log(this.user)
 
       });
     },
