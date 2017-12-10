@@ -153,7 +153,9 @@ function loadAppVM() {
           // check if user exists in database
           this.usersRef.child(userId).once('value', snapshot => {
             // if not, create a new user object in the database
-            if (!snapshot.val()) {
+            let user = snapshot.val()
+
+            if (!user) {
               this.usersRef.child(userId).set({
                 totalCollectCount: 0,
                 lastSignInDate: Date.now(),
@@ -161,6 +163,24 @@ function loadAppVM() {
             } else {
               // if so, save and set successive sign in data
               vm.$bindAsObject('user', this.usersRef.child(userId))
+
+              // refresh fruits if next day then update last sign in date
+              let lastSignInDate = (new Date(user.lastSignInDate)).getDate()
+              let todaysDate = (new Date()).getDate()
+              if (todaysDate > lastSignInDate) {
+                //refresh user fruits
+                this.fruits.forEach(fruit => {
+                  this.fruitsRef.child(fruit['.key']).update({
+                    collectCount: 0
+                  })
+                })
+              }
+
+              // update this sign in date
+              this.usersRef.child(userId).update({
+                lastSignInDate: Date.now()
+              })
+
             }
           })
 
