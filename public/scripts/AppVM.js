@@ -79,7 +79,7 @@ function loadAppVM() {
         },
         {
           id: 3,
-          title: "More Fruit -> Better You",
+          title: "More Fruit = Better You",
           description: "Collect a fruit each time you complete a goal."
         },
       ],
