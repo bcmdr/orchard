@@ -90,7 +90,7 @@
                 ></user-fruit>
               </div>
               <!-- New Fruit -->
-              <div class="newFruitFormWrapper">
+              <div v-if="readyToDisplayFruits" class="newFruitFormWrapper">
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--12-col">
                     <form

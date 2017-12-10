@@ -62,6 +62,7 @@ function loadAppVM() {
       usersRef: usersRef,
       isSignedIn: false,
       signInStatusKnown: false,
+      readyToDisplayFruits: false,
       date: new Date(),
       newFruit: {
         title: ''
@@ -145,9 +146,12 @@ function loadAppVM() {
           let userId = user.uid
           vm.userId = userId
           // bind vue array 'fruits' to user fruits reference in db
-          vm.$bindAsArray('fruits', fruitsRef.child(userId), function () {
+          vm.$bindAsArray('fruits', fruitsRef.child(userId), () =>  {
             // callback on cancel fruits binding
             vm.fruits = []
+          }, () => {
+            // callback on fruits binding ready
+            this.readyToDisplayFruits = true;
           })
 
           // check if user exists in database
