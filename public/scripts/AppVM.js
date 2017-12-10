@@ -96,7 +96,7 @@ function loadAppVM() {
     // computed
     computed: {
       fruitsLoaded: function() {
-        return this.fruits.length > 0
+        return true // TODO: verify database connection somehow
       },
       today: function() {
         var options = { weekday: 'long', month: 'short', day: 'numeric' }
