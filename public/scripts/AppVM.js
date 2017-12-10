@@ -70,17 +70,17 @@ function loadAppVM() {
         {
           id: 1,
           title: "Welcome to Orchard",
-          description: "Orchard grows better habits, one day at a time."
+          description: "Orchard helps grow better habits, one day at a time."
         },
         {
           id: 2,
           title: "This is a Fruit",
-          description: "Each fruit represents a daily goal."
+          description: "It represents something you'd like to do at least once a day."
         },
         {
           id: 3,
           title: "More Fruit = Better You",
-          description: "Collect a fruit each time you complete a goal."
+          description: "Collect fruit for each time you complete your goals each day."
         },
       ],
     },

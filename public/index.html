@@ -25,9 +25,9 @@
     <!-- initialize the Firebase SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
     <!-- Vue https://vuejs.org/ -->
-    <script defer src="https://unpkg.com/vue"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/vue"></script>
     <!-- VueFire https://github.com/vuejs/vuefire -->
-    <script defer src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+    <script defer src="https://unpkg.com/vuefire/dist/vuefire.min.js"></script>
     <!-- MDL -->
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
@@ -38,7 +38,14 @@
       <header class="mdl-layout__header" role="banner">
         <div class="mdl-layout__header-row">
           <!-- Title -->
-          <span class="mdl-layout-title">{{today}}</span>
+          <span class="mdl-layout-title">
+            <span v-if="isSignedIn">
+              {{today}}
+            </span>
+            <span v-else>
+              Orchard
+            </span>
+          </span>
           <!-- Align with spacer -->
           <div class="mdl-layout-spacer"></div>
           <nav class="mdl-navigation">
