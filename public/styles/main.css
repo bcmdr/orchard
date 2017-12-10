@@ -2,6 +2,10 @@ body {
   background: #FFE7D3
 }
 
+.greeting {
+  text-align: center;
+}
+
 /* General Styles */
 
 /* Remove excess side padding on top right header item */

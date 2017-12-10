@@ -27,6 +27,24 @@ function loadAppVM() {
     ]
   }
 
+  let demoFruitComponent = {
+    template: `
+      <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-fruit fruit-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">{{title}}</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            {{description}}
+          </div>
+        </div>
+      </div>
+    `,
+    props: [
+      'title', 'description'
+    ]
+  }
+
   // Firebase Refs
   let fruitsRef = firebase.database().ref('fruits')
   let usersRef = firebase.database().ref('users')
@@ -48,6 +66,23 @@ function loadAppVM() {
       newFruit: {
         title: ''
       },
+      demoFruits: [
+        {
+          id: 1,
+          title: "Welcome to Orchard",
+          description: "Orchard grows better habits, one day at a time."
+        },
+        {
+          id: 2,
+          title: "This is a Fruit",
+          description: "Each fruit represents a daily goal."
+        },
+        {
+          id: 3,
+          title: "More Fruit -> Better You",
+          description: "Collect a fruit each time you complete a goal."
+        },
+      ],
     },
     // firebase binding
     // https://github.com/vuejs/vuefire
@@ -143,7 +178,8 @@ function loadAppVM() {
 
     // components
     components: {
-      'user-fruit': userFruitComponent
+      'user-fruit': userFruitComponent,
+      'demo-fruit': demoFruitComponent,
     },
 
     // methods

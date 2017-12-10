@@ -46,7 +46,7 @@
               <div v-if="signInStatusKnown">
                 <a v-if="isSignedIn" class="mdl-navigation__link">{{user.totalCollectCount}} <i class="material-icons">check_circle</i></a>
                 <div v-else>
-                  <a class="mdl-navigation__link" @click="signinGoogle">Sign In</a>
+                  <a class="mdl-navigation__link" style="cursor: pointer" @click="signinGoogle">Sign In</a>
                 </div>
               </div>
             </div>
@@ -92,14 +92,15 @@
             </div>
           </div>
           <div v-else><!-- User Not Signed In -->
-            <div v-cloak class="greeting">
-              <h1>Welcome to Orchard</h1>
-              <h2>Orchard is Home to Your Trees</h2>
-              <p>
-                Each tree represents a daily goal. Complete that goal to collect
-                a fruit for that tree. Orchard resets your trees every day, but
-                also tracks your total fruit collected. More fruit -> Better you.
-              </p>
+            <div v-cloak class="demo-fruits">
+              <div class="mdl-grid">
+                <demo-fruit
+                  v-for="fruit in demoFruits"
+                  v-bind:key="fruit.id"
+                  v-bind:title="fruit.title"
+                  v-bind:description="fruit.description"
+                ></demo-fruit>
+              </div>
             </div>
           </div>
         </section>
