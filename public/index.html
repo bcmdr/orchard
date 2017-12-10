@@ -38,7 +38,7 @@
       <header class="mdl-layout__header" role="banner">
         <div class="mdl-layout__header-row">
           <!-- Title -->
-          <span class="mdl-layout-title">
+          <span v-if="signInStatusKnown" class="mdl-layout-title">
             <span v-if="isSignedIn">
               {{today}}
             </span>
@@ -49,7 +49,7 @@
           <!-- Align with spacer -->
           <div class="mdl-layout-spacer"></div>
           <nav class="mdl-navigation">
-            <div id="user">
+            <div class="user-area">
               <div v-if="signInStatusKnown">
                 <a v-if="isSignedIn" class="mdl-navigation__link">{{user.totalCollectCount}} <i class="material-icons">check_circle</i></a>
                 <div v-else>
@@ -60,6 +60,8 @@
           </nav>
         </div>
       </header>
+
+      <!-- Header Drawer -->
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Orchard</span>
         <nav class="mdl-navigation">
@@ -68,51 +70,61 @@
           </div>
         </nav>
       </div>
+
+      <!-- Main Content -->
       <main class="mdl-layout__content">
         <section class="page-content">
-          <div v-if="isSignedIn" id="user-fruits">
-            <div class="mdl-grid">
-              <user-fruit
-                v-for="(fruit, index) in fruits"
-                v-bind:key="fruit.id"
-                v-bind:title="fruit.title"
-                v-bind:collect-count="fruit.collectCount"
-                v-on:remove="removeFruit(fruit['.key'])"
-                v-on:increment="incrementCollectCountBy(fruit['.key'], 1)"
-                v-on:decrement="incrementCollectCountBy(fruit['.key'], -1)"
-              ></user-fruit>
-            </div>
-            <div class="newFruitFormWrapper">
+          <div v-if="signInStatusKnown">
+
+            <!-- User Fruits (User Signed In) -->
+            <div id="user-fruits" v-if="isSignedIn" >
               <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col">
-                  <form
-                    v-on:submit.prevent="addNewFruit">
-                    <input
-                      id="newFruitInput"
-                      v-model="newFruit.title"
-                      placeholder="New Daily Goal"
-                    >
-                    <input type="submit" value="Grow">
-                  </form>
+                <user-fruit
+                  v-for="(fruit, index) in fruits"
+                  v-bind:key="fruit.id"
+                  v-bind:title="fruit.title"
+                  v-bind:collect-count="fruit.collectCount"
+                  v-on:remove="removeFruit(fruit['.key'])"
+                  v-on:increment="incrementCollectCountBy(fruit['.key'], 1)"
+                  v-on:decrement="incrementCollectCountBy(fruit['.key'], -1)"
+                ></user-fruit>
+              </div>
+              <!-- New Fruit -->
+              <div class="newFruitFormWrapper">
+                <div class="mdl-grid">
+                  <div class="mdl-cell mdl-cell--12-col">
+                    <form
+                      v-on:submit.prevent="addNewFruit">
+                      <input
+                        id="newFruitInput"
+                        v-model="newFruit.title"
+                        placeholder="New Daily Goal"
+                      >
+                      <input type="submit" value="Grow">
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div v-else><!-- User Not Signed In -->
-            <div v-cloak class="demo-fruits">
-              <div class="mdl-grid">
-                <demo-fruit
-                  v-for="fruit in demoFruits"
-                  v-bind:key="fruit.id"
-                  v-bind:title="fruit.title"
-                  v-bind:description="fruit.description"
-                ></demo-fruit>
+
+            <!-- Demo Fruits (User Not Signed In) -->
+            <div v-else>
+              <div v-cloak class="demo-fruits">
+                <div class="mdl-grid">
+                  <demo-fruit
+                    v-for="fruit in demoFruits"
+                    v-bind:key="fruit.id"
+                    v-bind:title="fruit.title"
+                    v-bind:description="fruit.description"
+                  ></demo-fruit>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div> <!-- end #main -->
+            </div> <!-- end user not signed in -->
+
+          </div> <!-- end if sign in status known -->
+        </section> <!-- end mdl page content -->
+      </main> <!-- end main content -->
+    </div> <!-- end #app -->
 
 
     <!-- Vue Model -->
