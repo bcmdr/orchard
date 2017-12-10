@@ -16,7 +16,7 @@ function loadAppVM() {
           </div>
           <div class="mdl-card__menu">
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
-              <i class="material-icons">edit</i>
+              <i class="material-icons">delete</i>
             </button>
           </div>
         </div>
