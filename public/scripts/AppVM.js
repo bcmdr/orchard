@@ -233,7 +233,23 @@ function loadAppVM() {
         }
       },
       removeFruit: function(key) {
-        this.fruitsRef.child(key).remove()
+        let canDelete = confirm("Are you sure you'd like to delete this fruit?")
+        if (canDelete) {
+          // decrement the fruit from the total
+          this.fruitsRef.child(key).once('value', (snapshot) => {
+            let currentUser = firebase.auth().currentUser
+            let fruit = snapshot.val()
+            if (currentUser && fruit) {
+              this.usersRef.child(currentUser.uid).child('totalCollectCount').transaction(value => {
+                return (typeof value === 'number') ? value -= fruit.collectCount : value
+              })
+            }
+          });
+
+          // delete the fruit record
+          this.fruitsRef.child(key).remove()
+
+        }
       },
       incrementCollectCountBy: function(key, amount) {
         // Called on collection or uncollection of fruit
