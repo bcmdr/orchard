@@ -35,7 +35,7 @@ body {
 }
 
 .fruit-card-wide .collect-marker {
-  color: #ED6E00;
+  color: #ED6E00 !important
 }
 
 .fruit-card-wide .mdl-card__actions {

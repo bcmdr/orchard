@@ -215,13 +215,7 @@ function loadAppVM() {
       },
       signoutGoogle: function () {
         // https://firebase.google.com/docs/auth/web/google-signin
-        firebase.auth().signOut().then(function() {
-          // Sign-out successful.
-          console.log("Signout Successful")
-        }).catch(function(error) {
-          // An error happened.
-          console.log(error)
-        });
+        firebase.auth().signOut()
       },
       addNewFruit: function () {
         if (this.newFruitIsValid) {
