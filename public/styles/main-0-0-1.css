@@ -28,14 +28,14 @@ body {
 }
 .fruit-card-wide > .mdl-card__title {
   color: #fff;
-  background: #267F3C
+  background: #267F3C;
 }
 .fruit-card-wide > .mdl-card__menu {
   color: #fff;
 }
 
 .fruit-card-wide .collect-marker {
-  color: #ED6E00
+  color: #ED6E00;
 }
 
 .fruit-card-wide .mdl-card__actions {

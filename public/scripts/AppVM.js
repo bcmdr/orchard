@@ -75,13 +75,13 @@ function loadAppVM() {
         },
         {
           id: 2,
-          title: "This is a Fruit",
+          title: "This is a Fruit Tree",
           description: "It represents something you'd like to do at least once a day."
         },
         {
           id: 3,
-          title: "More Fruit = Better You",
-          description: "Collect fruit for each time you complete your goals each day."
+          title: "Collect Fruit for a Better You",
+          description: "The more you do, the more you get!"
         },
       ],
     },
