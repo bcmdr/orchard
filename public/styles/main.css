@@ -2,10 +2,6 @@ body {
   background: #FFE7D3
 }
 
-.greeting {
-  text-align: center;
-}
-
 /* General Styles */
 
 /* Remove excess side padding on top right header item */
@@ -20,7 +16,7 @@ body {
 /* Header Styles */
 
 .mdl-layout__header {
-  background: #267F3C
+  background: #19647E
 }
 
 /* Fruit Card Styles */
@@ -32,8 +28,12 @@ body {
 }
 .fruit-card-wide > .mdl-card__title {
   color: #fff;
-  background: #FC440F
+  background: #267F3C
 }
 .fruit-card-wide > .mdl-card__menu {
   color: #fff;
+}
+
+.fruit-card-wide .collect-marker {
+  color: #ED6E00
 }
