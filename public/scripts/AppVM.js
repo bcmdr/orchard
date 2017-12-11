@@ -11,7 +11,7 @@ function loadAppVM() {
               Collect
             </a>
             <button v-on:click="$emit('decrement')" v-for="n in collectCount" class="fruit-indicator mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons collect-marker">check_circle</i>
+              <span class="collect-marker"><i class="material-icons">check_circle</i></span>
             </button>
           </div>
           <div class="mdl-card__menu">
