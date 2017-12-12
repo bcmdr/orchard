@@ -72,8 +72,10 @@
     <!-- <script defer src="/__/firebase/4.7.0/firebase-storage.js"></script> -->
     <!-- initialize the Firebase SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
-    <!-- Vue https://vuejs.org/ -->
-    <script defer src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- Vue Development -->
+    <script defer src="https://unpkg.com/vue@2.5.9/dist/vue.js"></script>
+    <!-- Vue Production-->
+    <!-- <script defer src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     <!-- VueFire https://github.com/vuejs/vuefire -->
     <script defer src="https://unpkg.com/vuefire/dist/vuefire.min.js"></script>
     <!-- MDL -->
@@ -144,6 +146,7 @@
                   <div class="mdl-cell mdl-cell--12-col">
                     <button style="float: right" @click="toggleEdit">Edit Trees</button>
                     <form
+                      v-if="showNew"
                       v-on:submit.prevent="addNewFruit">
                       <input
                         id="newFruitInput"
@@ -152,29 +155,31 @@
                       >
                       <input type="submit" value="Grow Tree">
                     </form>
+                    <div v-else><button @click="toggleNew">New Tree</button>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Demo Fruits (User Not Signed In) -->
-            <div v-else>
-              <div v-cloak class="demo-fruits">
-                <div class="mdl-grid">
-                  <demo-fruit
-                    v-for="fruit in demoFruits"
-                    v-bind:key="fruit.id"
-                    v-bind:title="fruit.title"
-                    v-bind:description="fruit.description"
-                  ></demo-fruit>
-                </div>
+          <!-- Demo Fruits (User Not Signed In) -->
+          <div v-else>
+            <div v-cloak class="demo-fruits">
+              <div class="mdl-grid">
+                <demo-fruit
+                  v-for="fruit in demoFruits"
+                  v-bind:key="fruit.id"
+                  v-bind:title="fruit.title"
+                  v-bind:description="fruit.description"
+                ></demo-fruit>
               </div>
-            </div> <!-- end user not signed in -->
+            </div>
+          </div> <!-- end user not signed in -->
 
-          </div> <!-- end if sign in status known -->
-        </section> <!-- end mdl page content -->
-      </main> <!-- end main content -->
-    </div> <!-- end #app -->
+        </div> <!-- end if sign in status known -->
+      </section> <!-- end mdl page content -->
+    </main> <!-- end main content -->
+  </div> <!-- end #app -->
 
 
     <!-- Vue Model -->
@@ -247,6 +252,7 @@
               // vue binded
               usersRef: usersRef,
               edit: false,
+              showNew: false,
               isSignedIn: false,
               signInStatusKnown: false,
               readyToDisplayFruits: false,
@@ -407,6 +413,9 @@
               toggleEdit: function() {
                 this.edit = !this.edit
               },
+              toggleNew: function() {
+                this.showNew = !this.showNew
+              },
               addNewFruit: function () {
                 if (this.newFruitIsValid) {
                   this.fruitsRef.push({
@@ -414,10 +423,11 @@
                     collectCount: 0,
                   })
                   this.newFruit.title = ''
+                  this.showNew = false
                 }
               },
               removeFruit: function(key) {
-                let canDelete = confirm("Are you sure you'd like to delete this tree? Collections from previous days will be saved.")
+                let canDelete = confirm("Are you sure you'd like to delete this tree? Fruits collected from previous days will be saved.")
                 if (canDelete) {
                   // decrement the fruit from the total
                   this.fruitsRef.child(key).once('value', (snapshot) => {
