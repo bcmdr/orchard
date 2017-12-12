@@ -7,9 +7,6 @@ function loadAppVM() {
             <h2 class="mdl-card__title-text">{{title}}</h2>
           </div>
           <div class="mdl-card__actions mdl-card--border">
-            <a class="collect-button mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('increment')">
-              Collect
-            </a>
             <button v-on:click="$emit('decrement')" v-for="n in collectCount" class="fruit-indicator mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
               <span class="collect-marker"><i class="material-icons">check_circle</i></span>
             </button>
@@ -17,6 +14,9 @@ function loadAppVM() {
           <div class="mdl-card__menu">
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
               <i class="material-icons">delete</i>
+            </button>
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('increment')">
+              <i class="material-icons">check</i>
             </button>
           </div>
         </div>

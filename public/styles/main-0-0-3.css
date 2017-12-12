@@ -1,5 +1,5 @@
 body {
-  background: #FFE7D3
+  background: #fff;
 }
 
 /* General Styles */
@@ -22,6 +22,7 @@ body {
 /* Fruit Card Styles */
 
 .fruit-card-wide.mdl-card {
+  background: #FFE7D3;
   width: 100%;
   margin: auto;
   min-height: 1px; /* Override 200px default, scale with content */
@@ -31,13 +32,13 @@ body {
   background: #267F3C;
 }
 .fruit-card-wide > .mdl-card__menu {
-  color: #fff;
+  color: #1A592A;
 }
 
 .fruit-card-wide .collect-marker {
   color: #ED6E00 !important
 }
 
-.fruit-card-wide .mdl-card__actions {
-  padding: 0px !important
+.mdl-button.mdl-button--colored.collect-button {
+  color: black;
 }
