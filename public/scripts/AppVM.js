@@ -6,13 +6,13 @@ function loadAppVM() {
           <div class="mdl-card__title">
             <h2 class="mdl-card__title-text">{{title}}</h2>
           </div>
-          <div class="mdl-card__actions mdl-card--border">
+          <div v-if="collectCount > 0" class="mdl-card__actions mdl-card--border">
             <button v-on:click="$emit('decrement')" v-for="n in collectCount" class="fruit-indicator mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
               <span class="collect-marker"><i class="material-icons">check_circle</i></span>
             </button>
           </div>
           <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
+            <button v-if="edit" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('remove')">
               <i class="material-icons">delete</i>
             </button>
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" v-on:click="$emit('increment')">
@@ -23,7 +23,7 @@ function loadAppVM() {
       </div>
     `,
     props: [
-      'title', 'collectCount'
+      'title', 'collectCount', 'edit'
     ]
   }
 
@@ -60,6 +60,7 @@ function loadAppVM() {
       user: {},
       // vue binded
       usersRef: usersRef,
+      edit: false,
       isSignedIn: false,
       signInStatusKnown: false,
       readyToDisplayFruits: false,
@@ -216,6 +217,9 @@ function loadAppVM() {
       signoutGoogle: function () {
         // https://firebase.google.com/docs/auth/web/google-signin
         firebase.auth().signOut()
+      },
+      toggleEdit: function() {
+        this.edit = !this.edit
       },
       addNewFruit: function () {
         if (this.newFruitIsValid) {

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="./styles/main-0-0-3.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./styles/main-0-0-4.css" media="screen" />
 
     <!-- # JavaScript -->
     <!-- Firebase -->
@@ -84,6 +84,7 @@
                   v-bind:key="fruit.id"
                   v-bind:title="fruit.title"
                   v-bind:collect-count="fruit.collectCount"
+                  v-bind:edit="edit"
                   v-on:remove="removeFruit(fruit['.key'])"
                   v-on:increment="incrementCollectCountBy(fruit['.key'], 1)"
                   v-on:decrement="incrementCollectCountBy(fruit['.key'], -1)"
@@ -93,6 +94,7 @@
               <div v-if="readyToDisplayFruits" class="newFruitFormWrapper">
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--12-col">
+                    <button style="float: right" @click="toggleEdit">Edit Trees</button>
                     <form
                       v-on:submit.prevent="addNewFruit">
                       <input
@@ -100,7 +102,7 @@
                         v-model="newFruit.title"
                         placeholder="New Daily Goal"
                       >
-                      <input type="submit" value="Grow">
+                      <input type="submit" value="Grow Tree">
                     </form>
                   </div>
                 </div>
