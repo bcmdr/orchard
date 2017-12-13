@@ -35,7 +35,27 @@
       background: #19647E;
     }
 
-    /* Fruit Card Styles */
+    .mdl-navigation__link {
+        cursor: pointer;
+    }
+
+    /* Card Styles */
+
+    .input-card-wide {
+      background: #FFE7D3;
+      width: 100%;
+      margin: auto;
+      min-height: 1px; /* Override 200px default, scale with content */
+    }
+
+    .input-card-wide form {
+      width: 100%;
+    }
+
+    .input-card-wide .mdl-textfield {
+      padding: 0px;
+      width: 100%;
+    }
 
     .fruit-card-wide.mdl-card {
       background: #FFE7D3;
@@ -54,10 +74,6 @@
 
     .fruit-card-wide .collect-marker {
       color: #D8652B !important
-    }
-
-    .mdl-button.mdl-button--colored.collect-button {
-      color: black;
     }
 
     </style>
@@ -90,7 +106,7 @@
           <!-- Title -->
           <span v-if="signInStatusKnown" class="mdl-layout-title">
             <span v-if="isSignedIn">
-              {{today}}
+              Today's Goals
             </span>
             <span v-else>
               Orchard
@@ -116,7 +132,19 @@
         <span class="mdl-layout-title">Orchard</span>
         <nav class="mdl-navigation">
           <div v-if="signInStatusKnown">
-            <a v-if="isSignedIn" class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
+            <div v-if="isSignedIn">
+              <!-- <div class="new-control">
+                <a class="mdl-navigation__link" @click="toggleShowNew">New Tree</a>
+              </div> -->
+              <div class="edit-control">
+                <a v-if="edit" class="mdl-navigation__link" @click="toggleEdit">Hide Edit/Remove</a>
+                <div v-else>
+                  <a class="mdl-navigation__link" @click="toggleEdit">Edit Trees</a>
+                </div>
+              </div>
+              <hr>
+              <a class="mdl-navigation__link" @click="signoutGoogle">Sign Out</a>
+            </div>
           </div>
         </nav>
       </div>
@@ -139,48 +167,40 @@
                   v-on:increment="incrementCollectCountBy(fruit['.key'], 1)"
                   v-on:decrement="incrementCollectCountBy(fruit['.key'], -1)"
                 ></user-fruit>
-              </div>
-              <!-- New Fruit -->
-              <div v-if="readyToDisplayFruits" class="newFruitFormWrapper">
-                <div class="mdl-grid">
-                  <div class="mdl-cell mdl-cell--12-col">
-                    <button style="float: right" @click="toggleEdit">Edit Trees</button>
-                    <form
-                      v-if="showNew"
-                      v-on:submit.prevent="addNewFruit">
-                      <input
-                        id="newFruitInput"
-                        v-model="newFruit.title"
-                        placeholder="New Daily Goal"
-                      >
-                      <input type="submit" value="Grow Tree">
-                    </form>
-                    <div v-else><button @click="toggleNew">New Tree</button>
+                <!-- New Fruit -->
+                <div v-if="readyToDisplayFruits" class="mdl-cell mdl-cell--12-col">
+                  <div class="input-card-wide mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                      <form
+                        v-on:submit.prevent="addNewFruit">
+                        <div class="mdl-textfield mdl-js-textfield">
+                          <input class="mdl-textfield__input" type="text" v-model="newFruit.title" placeholder= "New Daily Goal" id="newTreeTitle">
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </div><!-- End isSignedIn -->
 
-          <!-- Demo Fruits (User Not Signed In) -->
-          <div v-else>
-            <div v-cloak class="demo-fruits">
-              <div class="mdl-grid">
-                <demo-fruit
-                  v-for="fruit in demoFruits"
-                  v-bind:key="fruit.id"
-                  v-bind:title="fruit.title"
-                  v-bind:description="fruit.description"
-                ></demo-fruit>
+            <!-- Demo Fruits (User Not Signed In) -->
+            <div v-else>
+              <div v-cloak class="demo-fruits">
+                <div class="mdl-grid">
+                  <demo-fruit
+                    v-for="fruit in demoFruits"
+                    v-bind:key="fruit.id"
+                    v-bind:title="fruit.title"
+                    v-bind:description="fruit.description"
+                  ></demo-fruit>
+                </div>
               </div>
-            </div>
-          </div> <!-- end user not signed in -->
+            </div> <!-- end user not signed in -->
 
-        </div> <!-- end if sign in status known -->
-      </section> <!-- end mdl page content -->
-    </main> <!-- end main content -->
-  </div> <!-- end #app -->
-
+          </div> <!-- end if sign in status known -->
+        </section> <!-- end mdl page content -->
+      </main> <!-- end main content -->
+    </div> <!-- end #app -->
 
     <!-- Vue Model -->
     <!-- <script src="./scripts/AppVM.js"></script> -->
@@ -413,7 +433,7 @@
               toggleEdit: function() {
                 this.edit = !this.edit
               },
-              toggleNew: function() {
+              toggleShowNew: function() {
                 this.showNew = !this.showNew
               },
               addNewFruit: function () {
@@ -423,7 +443,6 @@
                     collectCount: 0,
                   })
                   this.newFruit.title = ''
-                  this.showNew = false
                 }
               },
               removeFruit: function(key) {
