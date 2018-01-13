@@ -1,0 +1,42 @@
+[debug] [2017-12-19T16:36:41.655Z] ----------------------------------------------------------------------
+[debug] [2017-12-19T16:36:41.658Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-12-19T16:36:41.658Z] CLI Version:   3.16.0
+[debug] [2017-12-19T16:36:41.658Z] Platform:      darwin
+[debug] [2017-12-19T16:36:41.658Z] Node Version:  v8.9.3
+[debug] [2017-12-19T16:36:41.659Z] Time:          Tue Dec 19 2017 09:36:41 GMT-0700 (MST)
+[debug] [2017-12-19T16:36:41.659Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-12-19T16:36:41.674Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-12-19T16:36:41.674Z] > authorizing via signed-in user
+[debug] [2017-12-19T16:36:41.676Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-12-19T16:36:41.676Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/9O7l7FoaVoLqatlg25RlHMxc4NlPztqnvQJMJJOiW0E4wKpVoxcVsdZ-NMM_nYLv',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Dec 19 2017 09:36:41 GMT-0700 (MST)
+[debug] [2017-12-19T16:36:41.991Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-19T16:36:42.027Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/orchard-bcmdr  
+  
+ Tue Dec 19 2017 09:36:42 GMT-0700 (MST)
+[debug] [2017-12-19T16:36:42.550Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-19T16:36:42.551Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/orchard-bcmdr/tokens  
+  
+ Tue Dec 19 2017 09:36:42 GMT-0700 (MST)
+[debug] [2017-12-19T16:36:42.921Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/admin/github/orchard'...
+[info] 
+[debug] [2017-12-19T16:36:42.926Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/orchard-bcmdr  
+  
+ Tue Dec 19 2017 09:36:42 GMT-0700 (MST)
+[debug] [2017-12-19T16:36:43.294Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-19T16:36:43.297Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/983423249024/clients/_:getWebAppConfig  
+  
+ Tue Dec 19 2017 09:36:43 GMT-0700 (MST)
+[debug] [2017-12-19T16:36:43.708Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[info] Shutting down...
